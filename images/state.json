@@ -2,7 +2,7 @@
   "schema": 2,
   "commits": 1500,
   "goal": 3000,
-  "mode": "spread",
+  "mode": "random",
   "seed": 2026,
   "images": [
     {
@@ -11,13 +11,13 @@
       "label": "은행나무",
       "commits": 1500,
       "goal": 3000,
-      "mode": "spread",
+      "mode": "random",
       "seed": 2026,
       "regions": 221,
-      "complete": 150,
-      "active": 193,
-      "bytes": 359698,
-      "sha256": "5d56c57ba451935579324dd968b231162743cd6595f6f2ac8a51f978f933360d"
+      "complete": 108,
+      "active": 5,
+      "bytes": 373506,
+      "sha256": "5f4d9bda3d6e73fa32972698ea4bdc3a6304cb0f4636b8ef05fdb88c37a8acf4"
     },
     {
       "name": "fern-complete-v2",
@@ -25,13 +25,13 @@
       "label": "양치식물",
       "commits": 1500,
       "goal": 3000,
-      "mode": "spread",
+      "mode": "random",
       "seed": 2026,
       "regions": 377,
-      "complete": 212,
-      "active": 179,
-      "bytes": 451486,
-      "sha256": "e45df716567cd6b12cb63707d74cb6354b6db567f86eeb93d964d1944dd75175"
+      "complete": 187,
+      "active": 264,
+      "bytes": 453942,
+      "sha256": "68f52a21cf999f74d0eaf6f667a8ec4affb57811f65ea2264d1ede951bf7c319"
     }
   ]
 }

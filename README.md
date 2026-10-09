@@ -4,9 +4,9 @@
 
 **2026년 · 시험 1,500 / 목표 3,000커밋 · 50.0% · 완성까지 1,500커밋**
 
-채색 방식: 여러 지점에서 퍼지기
+채색 방식: 랜덤 분산
 
-<table><tr><th>은행나무 · Ginkgo biloba</th><th>양치식물 · Fern study</th></tr><tr><td><img src="images/01-sketch-bloom.svg?v=5d56c57ba451" width="360" alt="은행나무 1500/3000 채색" /></td><td><img src="images/02-watercolor-fern.svg?v=e45df716567c" width="360" alt="양치식물 1500/3000 채색" /></td></tr></table>
+<table><tr><th>은행나무 · Ginkgo biloba</th><th>양치식물 · Fern study</th></tr><tr><td><img src="images/01-sketch-bloom.svg?v=5f4d9bda3d6e" width="360" alt="은행나무 1500/3000 채색" /></td><td><img src="images/02-watercolor-fern.svg?v=68f52a21cf99" width="360" alt="양치식물 1500/3000 채색" /></td></tr></table>
 
 ## 이번 버전
 
