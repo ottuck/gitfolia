@@ -1,26 +1,37 @@
 {
-  "commits": 2000,
+  "schema": 2,
+  "commits": 1500,
   "goal": 3000,
+  "mode": "spread",
+  "seed": 2026,
   "images": [
     {
-      "name": "01-sketch-bloom",
-      "commits": 2000,
+      "name": "ginkgo-complete-v2",
+      "key": "01-sketch-bloom",
+      "label": "은행나무",
+      "commits": 1500,
       "goal": 3000,
-      "regions": 132,
-      "complete": 88,
-      "active": 87,
-      "bytes": 4450435,
-      "sha256": "834a3bb1dc7f282c10e46013af4c8c736c647f21122d473cea4f9edddbe65a68"
+      "mode": "spread",
+      "seed": 2026,
+      "regions": 221,
+      "complete": 150,
+      "active": 193,
+      "bytes": 359698,
+      "sha256": "5d56c57ba451935579324dd968b231162743cd6595f6f2ac8a51f978f933360d"
     },
     {
-      "name": "02-watercolor-fern",
-      "commits": 2000,
+      "name": "fern-complete-v2",
+      "key": "02-watercolor-fern",
+      "label": "양치식물",
+      "commits": 1500,
       "goal": 3000,
-      "regions": 467,
-      "complete": 311,
-      "active": 311,
-      "bytes": 4389627,
-      "sha256": "855c971fff90e9056884bcc5e11631522d0ec564da40449b60e7da2afd51fc45"
+      "mode": "spread",
+      "seed": 2026,
+      "regions": 377,
+      "complete": 212,
+      "active": 179,
+      "bytes": 451486,
+      "sha256": "e45df716567cd6b12cb63707d74cb6354b6db567f86eeb93d964d1944dd75175"
     }
   ]
 }

@@ -1,19 +1,13 @@
-# 프로필 README 삽입 검증
+# 프로필 삽입 코드
 
-다른 저장소의 README에 넣을 때 사용하는 **절대 URL**로 같은 이미지를 표시합니다. 시험 상태는 **2000 / 3000커밋**입니다.
-
-<table><tr><th>은행나무</th><th>양치식물</th></tr><tr><td><img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/01-sketch-bloom.svg?v=834a3bb1dc7f" width="360" alt="프로필 삽입 검증 은행나무 2000" /></td><td><img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/02-watercolor-fern.svg?v=855c971fff90" width="360" alt="프로필 삽입 검증 양치식물 2000" /></td></tr></table>
-
-복사할 은행나무 코드:
+현재 저장소는 비공개입니다. 완성 후 공개 전환한 다음 아래 코드를 사용할 수 있습니다. 현재 그림은 1500/3000, spread, 2026 상태입니다.
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/01-sketch-bloom.svg?v=834a3bb1dc7f" width="360" alt="Botanical garden" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/01-sketch-bloom.svg?v=5d56c57ba451" width="360" alt="Botanical garden · Ginkgo" />
 ```
-
-복사할 양치식물 코드:
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/02-watercolor-fern.svg?v=855c971fff90" width="360" alt="Botanical garden" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/02-watercolor-fern.svg?v=e45df716567c" width="360" alt="Botanical garden · Fern" />
 ```
 
-채색은 GitHub Actions가 이미지를 교체할 때 갱신됩니다. 이 문서의 버전 값은 그림 해시로 자동 갱신됩니다. 실제 프로필에 적용할 때도 프로필 README의 버전 값을 함께 갱신하면 이전 이미지 캐시를 피할 수 있습니다. 현재 열린 README가 커밋 발생을 실시간으로 감지하는 방식은 아닙니다.
+이미지가 바뀌면 이 문서의 버전 값도 갱신됩니다. 실제 프로필에 자동 연결할 때는 프로필 README의 버전 값도 함께 갱신해야 합니다. 열린 README가 커밋 발생을 실시간으로 감지하는 방식은 아닙니다.

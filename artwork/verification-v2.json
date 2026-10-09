@@ -1,0 +1,35 @@
+{
+  "schema": 2,
+  "report": [
+    {
+      "name": "ginkgo-complete-v2",
+      "regions": 221,
+      "oneCommitChangedChannels": 163,
+      "checks": [
+        "three order modes",
+        "no duplicates in order",
+        "stable state",
+        "monotonic leaf color",
+        "at most one partially painted region",
+        "all targets restore colored artwork",
+        "nonmask and alpha unchanged",
+        "one commit visible in pixel data"
+      ]
+    },
+    {
+      "name": "fern-complete-v2",
+      "regions": 377,
+      "oneCommitChangedChannels": 3460,
+      "checks": [
+        "three order modes",
+        "no duplicates in order",
+        "stable state",
+        "monotonic leaf color",
+        "at most one partially painted region",
+        "all targets restore colored artwork",
+        "nonmask and alpha unchanged",
+        "one commit visible in pixel data"
+      ]
+    }
+  ]
+}

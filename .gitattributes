@@ -1,7 +1,12 @@
 *.mjs text eol=lf
+*.js text eol=lf
+*.html text eol=lf
+*.css text eol=lf
+*.py text eol=lf
 *.md text eol=lf
 *.json text eol=lf
 *.yml text eol=lf
 *.svg text eol=lf
 *.mask binary
 *.png binary
+*.gz binary

@@ -3,6 +3,12 @@
   "version": "0.0.1",
   "private": true,
   "type": "module",
-  "scripts": { "render": "node scripts/render.mjs" },
-  "dependencies": { "pngjs": "7.0.0" }
+  "scripts": {
+    "render": "node scripts/render-v2.mjs",
+    "verify": "node scripts/verify-v2.mjs"
+  },
+  "dependencies": {
+    "pngjs": "7.0.0",
+    "sharp": "0.35.5"
+  }
 }
