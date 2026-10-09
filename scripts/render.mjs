@@ -33,10 +33,10 @@ const readme=`# Botanical README PoC
 
 <table>
   <tr><th>은행나무 · 부분 채색</th><th>양치식물 · 촘촘한 채색</th></tr>
-  <tr><td><img src="images/01-sketch-bloom.svg" width="360" alt="은행나무 채색: ${commits} 시험 커밋" /></td><td><img src="images/02-watercolor-fern.svg" width="360" alt="양치식물 채색: ${commits} 시험 커밋" /></td></tr>
+  <tr><td><img src="images/01-sketch-bloom.svg?v=${results[0].sha256.slice(0,12)}" width="360" alt="은행나무 채색: ${commits} 시험 커밋" /></td><td><img src="images/02-watercolor-fern.svg?v=${results[1].sha256.slice(0,12)}" width="360" alt="양치식물 채색: ${commits} 시험 커밋" /></td></tr>
 </table>
 
-현재 채색 중인 작은 영역이 약 3초마다 은은하게 강조됩니다. 위 두 이미지의 주소는 갱신 후에도 같습니다.
+현재 채색 중인 작은 영역이 약 3초마다 은은하게 강조됩니다. 파일 경로는 유지하고, 그림이 바뀌면 URL의 버전 값도 바꿔 캐시된 이전 그림을 피합니다.
 
 ## 검증 범위
 
@@ -44,6 +44,7 @@ const readme=`# Botanical README PoC
 - 이미지 안에는 JavaScript와 외부 이미지 요청이 없습니다. PNG를 내장한 SVG와 SMIL 애니메이션입니다.
 - GitHub Actions의 수동 실행으로 그림을 다시 만들고 README 및 이미지에 반영합니다.
 - <code>images/state.json</code>에 입력 수치, 완료 영역, 이미지 해시를 기록합니다.
+- 다른 저장소에 넣을 절대 URL과 복사 코드는 [PROFILE-EMBED.md](PROFILE-EMBED.md)에서 확인합니다.
 
 ## 직접 갱신
 
@@ -63,4 +64,26 @@ npm run render -- 1000 3000
 기존 PoC의 아래에서 위로 채워지는 자동 마스크를 그대로 사용합니다. 잎별 또는 랜덤 분산 채색은 아직 구현하지 않았습니다. 은행나무 원본의 연필 잎은 완료 상태에도 남습니다. 완성품은 모든 잎의 선화·채색·마스크를 분리한 소재가 필요합니다.
 `;
 fs.writeFileSync(path.join(root,'README.md'),readme);
+const urls=results.map(r=>`https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/${r.name}.svg?v=${r.sha256.slice(0,12)}`);
+const profile=`# 프로필 README 삽입 검증
+
+다른 저장소의 README에 넣을 때 사용하는 **절대 URL**로 같은 이미지를 표시합니다. 시험 상태는 **${commits} / ${goal}커밋**입니다.
+
+<table><tr><th>은행나무</th><th>양치식물</th></tr><tr><td><img src="${urls[0]}" width="360" alt="프로필 삽입 검증 은행나무 ${commits}" /></td><td><img src="${urls[1]}" width="360" alt="프로필 삽입 검증 양치식물 ${commits}" /></td></tr></table>
+
+복사할 은행나무 코드:
+
+\`\`\`markdown
+<img src="${urls[0]}" width="360" alt="Botanical garden" />
+\`\`\`
+
+복사할 양치식물 코드:
+
+\`\`\`markdown
+<img src="${urls[1]}" width="360" alt="Botanical garden" />
+\`\`\`
+
+채색은 GitHub Actions가 이미지를 교체할 때 갱신됩니다. 이 문서의 버전 값은 그림 해시로 자동 갱신됩니다. 실제 프로필에 적용할 때도 프로필 README의 버전 값을 함께 갱신하면 이전 이미지 캐시를 피할 수 있습니다. 현재 열린 README가 커밋 발생을 실시간으로 감지하는 방식은 아닙니다.
+`;
+fs.writeFileSync(path.join(root,'PROFILE-EMBED.md'),profile);
 console.log(JSON.stringify(results,null,2));
