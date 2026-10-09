@@ -2,11 +2,11 @@
 
 보태니컬 그림이 **GitHub README에서 표시되고 움직이며, Actions로 갱신되는지** 확인하는 공개 시험 저장소입니다.
 
-**시험 수치: 1,000커밋 / 완전 채색 기준: 3,000커밋**
+**시험 수치: 2,000커밋 / 완전 채색 기준: 3,000커밋**
 
 <table>
   <tr><th>은행나무 · 부분 채색</th><th>양치식물 · 촘촘한 채색</th></tr>
-  <tr><td><img src="images/01-sketch-bloom.svg" width="360" alt="은행나무 채색: 1000 시험 커밋" /></td><td><img src="images/02-watercolor-fern.svg" width="360" alt="양치식물 채색: 1000 시험 커밋" /></td></tr>
+  <tr><td><img src="images/01-sketch-bloom.svg" width="360" alt="은행나무 채색: 2000 시험 커밋" /></td><td><img src="images/02-watercolor-fern.svg" width="360" alt="양치식물 채색: 2000 시험 커밋" /></td></tr>
 </table>
 
 현재 채색 중인 작은 영역이 약 3초마다 은은하게 강조됩니다. 위 두 이미지의 주소는 갱신 후에도 같습니다.
