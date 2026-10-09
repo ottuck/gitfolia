@@ -1,0 +1,8 @@
+{
+  "name": "botanical-readme-poc",
+  "version": "0.0.1",
+  "private": true,
+  "type": "module",
+  "scripts": { "render": "node scripts/render.mjs" },
+  "dependencies": { "pngjs": "7.0.0" }
+}

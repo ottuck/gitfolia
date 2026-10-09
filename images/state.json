@@ -1,0 +1,26 @@
+{
+  "commits": 1000,
+  "goal": 3000,
+  "images": [
+    {
+      "name": "01-sketch-bloom",
+      "commits": 1000,
+      "goal": 3000,
+      "regions": 132,
+      "complete": 44,
+      "active": 43,
+      "bytes": 4461407,
+      "sha256": "f097a053f5a7808a68d4c53e219c65c15e1b0cda7821cb839544841c3a9ef30a"
+    },
+    {
+      "name": "02-watercolor-fern",
+      "commits": 1000,
+      "goal": 3000,
+      "regions": 467,
+      "complete": 155,
+      "active": 155,
+      "bytes": 4385543,
+      "sha256": "5985bf5eaae5209ef218940786f086b300f0e7fd355fab07df461078bd231ca4"
+    }
+  ]
+}
