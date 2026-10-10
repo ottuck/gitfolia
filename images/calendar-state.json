@@ -11,7 +11,7 @@
       "theme": "watercolor",
       "name": "수채화 양치식물",
       "filename": "calendar-watercolor.svg",
-      "sha256": "d22d7871d015cc0cbf9e703f547d3bcc275aca7e5e091e1282ddcc8b30169b00",
+      "sha256": "add6be428fddb593a67a2fdf12865dcc85a62acf9c62471814b2e03da78b6d16",
       "bytes": 414696,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
@@ -20,7 +20,7 @@
       "theme": "herbarium",
       "name": "동판화 허바리움",
       "filename": "calendar-herbarium.svg",
-      "sha256": "8eaa07f0317f57d65bf9e8adee07f2383bb1d2cbcf7667aa377ddb75caadd862",
+      "sha256": "b93bb59dc9d240392e79a72c7db0a9e5f3c166fbec97286eb192887935e43404",
       "bytes": 420221,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
@@ -29,7 +29,7 @@
       "theme": "midnight",
       "name": "미드나이트 식물 도감",
       "filename": "calendar-midnight.svg",
-      "sha256": "4f45184856b8276c756177c182c7f30c61357c1033e817d5c6b8ae6d72d2ce4d",
+      "sha256": "fdeb124abcdcea8fb2f5c4039787e239b872dfdccb11585db6b72a4d5ff31662",
       "bytes": 414491,
       "dailyLeaves": 365,
       "weeklyLeaves": 53

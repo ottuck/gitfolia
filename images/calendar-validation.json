@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-10T23:57:42.492Z",
+  "checkedAt": "2026-10-10T23:59:00.964Z",
   "login": "ottuck",
   "year": 2026,
   "asOf": "2026-10-10",
@@ -35,8 +35,8 @@
       "name": "SECOND_QUARTILE",
       "days": 4,
       "sample": {
-        "date": "2026-09-24",
-        "count": 33,
+        "date": "2026-09-26",
+        "count": 34,
         "level": 2,
         "future": false
       }
@@ -68,7 +68,7 @@
     {
       "theme": "watercolor",
       "file": "calendar-watercolor.svg",
-      "sha256": "d22d7871d015cc0cbf9e703f547d3bcc275aca7e5e091e1282ddcc8b30169b00",
+      "sha256": "add6be428fddb593a67a2fdf12865dcc85a62acf9c62471814b2e03da78b6d16",
       "dailyLeavesChecked": 365,
       "weeklyLeavesChecked": 53,
       "mismatches": 0
@@ -76,7 +76,7 @@
     {
       "theme": "herbarium",
       "file": "calendar-herbarium.svg",
-      "sha256": "8eaa07f0317f57d65bf9e8adee07f2383bb1d2cbcf7667aa377ddb75caadd862",
+      "sha256": "b93bb59dc9d240392e79a72c7db0a9e5f3c166fbec97286eb192887935e43404",
       "dailyLeavesChecked": 365,
       "weeklyLeavesChecked": 53,
       "mismatches": 0
@@ -84,7 +84,7 @@
     {
       "theme": "midnight",
       "file": "calendar-midnight.svg",
-      "sha256": "4f45184856b8276c756177c182c7f30c61357c1033e817d5c6b8ae6d72d2ce4d",
+      "sha256": "fdeb124abcdcea8fb2f5c4039787e239b872dfdccb11585db6b72a4d5ff31662",
       "dailyLeavesChecked": 365,
       "weeklyLeavesChecked": 53,
       "mismatches": 0

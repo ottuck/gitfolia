@@ -21,6 +21,8 @@ fs.writeFileSync(path.join(root,'README.md'),`# Botanical calendar
 
 **${year}년 · ${data.source==='github'?'@'+data.login+' 실제 GitHub 기여':'데모 데이터'} · ${data.asOf} UTC 기준 · ${total.toLocaleString('en-US')} contributions · ${active} active days**
 
+${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com/${data.login}?tab=overview&from=${year}-01-01&to=${data.asOf}) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json)`:'데모 데이터로 렌더링한 예시입니다.'}
+
 <table><tr>${results.map(r=>'<th>'+r.name+'</th>').join('')}</tr><tr>${results.map(r=>'<td><img src="images/'+version(r)+'" width="280" alt="'+r.name+' '+year+' daily contribution calendar" /></td>').join('')}</tr></table>
 
 ## 날짜와 색
