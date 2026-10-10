@@ -1,0 +1,94 @@
+{
+  "checkedAt": "2026-10-10T23:50:57.397Z",
+  "login": "ottuck",
+  "year": 2026,
+  "asOf": "2026-10-10",
+  "source": "Fresh GitHub GraphQL contributionCalendar response using the current authenticated scope",
+  "pastDatesChecked": 283,
+  "futureDatesChecked": 82,
+  "totalContributions": 1319,
+  "levels": [
+    {
+      "level": 0,
+      "name": "NONE",
+      "days": 210,
+      "sample": {
+        "date": "2026-01-01",
+        "count": 0,
+        "level": 0,
+        "future": false
+      }
+    },
+    {
+      "level": 1,
+      "name": "FIRST_QUARTILE",
+      "days": 58,
+      "sample": {
+        "date": "2026-09-13",
+        "count": 16,
+        "level": 1,
+        "future": false
+      }
+    },
+    {
+      "level": 2,
+      "name": "SECOND_QUARTILE",
+      "days": 4,
+      "sample": {
+        "date": "2026-09-26",
+        "count": 34,
+        "level": 2,
+        "future": false
+      }
+    },
+    {
+      "level": 3,
+      "name": "THIRD_QUARTILE",
+      "days": 4,
+      "sample": {
+        "date": "2026-10-04",
+        "count": 71,
+        "level": 3,
+        "future": false
+      }
+    },
+    {
+      "level": 4,
+      "name": "FOURTH_QUARTILE",
+      "days": 7,
+      "sample": {
+        "date": "2026-10-02",
+        "count": 135,
+        "level": 4,
+        "future": false
+      }
+    }
+  ],
+  "images": [
+    {
+      "theme": "watercolor",
+      "file": "calendar-watercolor.svg",
+      "sha256": "add6be428fddb593a67a2fdf12865dcc85a62acf9c62471814b2e03da78b6d16",
+      "dailyLeavesChecked": 365,
+      "weeklyLeavesChecked": 53,
+      "mismatches": 0
+    },
+    {
+      "theme": "herbarium",
+      "file": "calendar-herbarium.svg",
+      "sha256": "b93bb59dc9d240392e79a72c7db0a9e5f3c166fbec97286eb192887935e43404",
+      "dailyLeavesChecked": 365,
+      "weeklyLeavesChecked": 53,
+      "mismatches": 0
+    },
+    {
+      "theme": "midnight",
+      "file": "calendar-midnight.svg",
+      "sha256": "fdeb124abcdcea8fb2f5c4039787e239b872dfdccb11585db6b72a4d5ff31662",
+      "dailyLeavesChecked": 365,
+      "weeklyLeavesChecked": 53,
+      "mismatches": 0
+    }
+  ],
+  "mismatches": 0
+}

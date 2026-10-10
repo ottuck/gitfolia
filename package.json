@@ -6,6 +6,7 @@
   "scripts": {
     "render": "node scripts/render-calendar.mjs",
     "verify": "node scripts/verify-calendar.mjs",
+    "verify:actual": "node scripts/verify-actual-calendar.mjs",
     "verify:legacy": "node scripts/verify-v2.mjs",
     "build:sprites": "node scripts/build-sprites.mjs"
   },

@@ -11,7 +11,11 @@ function selectDate(date){
  for(const theme of themes){for(const item of $(theme).querySelectorAll('[data-selected]'))item.removeAttribute('data-selected');$(theme).querySelector(`[data-date="${day.date}"]`)?.setAttribute('data-selected','true');}
 }
 function render(){
- for(const theme of themes){const svg=calendarSvg(data,{theme,sprites:sprites[theme],weekly:$('weekly').checked});svgStrings[theme]=svg;$(theme).innerHTML=svg;document.querySelector(`[data-theme="${theme}"] .leaf-count`).textContent=`${data.days.length}일 · ${data.days.filter(d=>d.count>0).length} 활동일`;}
+ for(const theme of themes){const svg=calendarSvg(data,{theme,sprites:sprites[theme],weekly:$('weekly').checked});svgStrings[theme]=svg;$(theme).innerHTML=svg;document.querySelector(`[data-theme="${theme}"] .leaf-count`).textContent=`${data.days.length}일 · ${data.days.filter(d=>d.count>0).length} 활동일`;
+  const figure=document.querySelector(`[data-theme="${theme}"]`);let legend=figure.querySelector('.leaf-legend');
+  if(!legend){legend=document.createElement('div');legend.className='leaf-legend';legend.style.background=THEMES[theme].paper;legend.style.color=THEMES[theme].ink;legend.setAttribute('aria-label','색 단계 0부터 4까지의 실제 잎 범례');figure.querySelector('.poster').after(legend);}
+  legend.innerHTML=[0,1,2,3,4].map(level=>`<span><img src="${sprites[theme].tiles[`0-${level}`].uri}" alt="색 단계 ${level}"/><small>${level===0?'활동 없음':'단계 '+level}</small></span>`).join('');
+ }
  $('date').min=data.days[0].date;$('date').max=data.days.at(-1).date;$('day-slider').max=data.days.length-1;
  $('data-status').textContent=data.source==='github'?`@${data.login} 실제 기록 · ${data.asOf} UTC`:`${data.year}년 예시 · ${data.days.length}개 일별 잎`;
  selectDate($('date').value);

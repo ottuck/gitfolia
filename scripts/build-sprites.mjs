@@ -20,8 +20,14 @@ for(const [theme,palette]of Object.entries(THEMES)){
    sketch[j]=ink[0];sketch[j+1]=ink[1];sketch[j+2]=ink[2];sketch[j+3]=Math.round(a*Math.min(1,.045+edge*2.7+vein*2.5));
   }
   for(let level=0;level<=4;level++){
-   const buffer=level===0?sketch:Buffer.from(original),opacity=[0,.33,.51,.73,1][level];
-   if(level)for(let j=3;j<buffer.length;j+=4)buffer[j]=Math.round(buffer[j]*opacity);
+   const buffer=level===0?sketch:Buffer.from(original),opacity=[0,.24,.47,.74,1][level];
+   // Preserve each illustration's hue and texture, but separate both paint density
+   // and brightness. On midnight paper, more activity means brighter pigment.
+   const gain=(palette.dark?[0,.80,1,1.20,1.42]:[0,1.08,.96,.80,.64])[level];
+   if(level)for(let j=0;j<buffer.length;j+=4){
+    for(let channel=0;channel<3;channel++)buffer[j+channel]=Math.min(255,Math.round(buffer[j+channel]*gain));
+    buffer[j+3]=Math.round(buffer[j+3]*opacity);
+   }
    const png=await sharp(buffer,{raw:{width,height,channels:4}}).png({palette:true,quality:95,effort:10}).toBuffer();tiles[`${i}-${level}`]={width,height,uri:'data:image/png;base64,'+png.toString('base64')};
   }
  }

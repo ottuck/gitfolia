@@ -1519,13 +1519,13 @@
     },
     {
       "date": "2026-09-10",
-      "count": 2,
+      "count": 1,
       "level": 1,
       "future": false
     },
     {
       "date": "2026-09-11",
-      "count": 11,
+      "count": 12,
       "level": 1,
       "future": false
     },
@@ -1591,13 +1591,13 @@
     },
     {
       "date": "2026-09-22",
-      "count": 8,
+      "count": 7,
       "level": 1,
       "future": false
     },
     {
       "date": "2026-09-23",
-      "count": 14,
+      "count": 15,
       "level": 1,
       "future": false
     },
@@ -1609,13 +1609,13 @@
     },
     {
       "date": "2026-09-25",
-      "count": 58,
+      "count": 57,
       "level": 3,
       "future": false
     },
     {
       "date": "2026-09-26",
-      "count": 33,
+      "count": 34,
       "level": 2,
       "future": false
     },
@@ -1693,13 +1693,13 @@
     },
     {
       "date": "2026-10-09",
-      "count": 53,
+      "count": 52,
       "level": 3,
       "future": false
     },
     {
       "date": "2026-10-10",
-      "count": 30,
+      "count": 32,
       "level": 2,
       "future": false
     },
