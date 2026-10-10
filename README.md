@@ -2,9 +2,9 @@
 
 하루에 잎 하나. GitHub의 기여 기록을 수채화 양치식물, 동판화 허바리움, 미드나이트 식물 도감으로 표현합니다. **비공개 개발 중**입니다.
 
-**2026년 · @ottuck 실제 GitHub 기여 · 2026-10-10 UTC 기준 · 1,317 contributions · 73 active days**
+**2026년 · @ottuck 실제 GitHub 기여 · 2026-10-10 UTC 기준 · 1,318 contributions · 73 active days**
 
-<table><tr><th>수채화 양치식물</th><th>동판화 허바리움</th><th>미드나이트 식물 도감</th></tr><tr><td><img src="images/calendar-watercolor.svg?v=39d93f6ba9f5" width="280" alt="수채화 양치식물 2026 daily contribution calendar" /></td><td><img src="images/calendar-herbarium.svg?v=d9cd513954bd" width="280" alt="동판화 허바리움 2026 daily contribution calendar" /></td><td><img src="images/calendar-midnight.svg?v=3d134bc61e3e" width="280" alt="미드나이트 식물 도감 2026 daily contribution calendar" /></td></tr></table>
+<table><tr><th>수채화 양치식물</th><th>동판화 허바리움</th><th>미드나이트 식물 도감</th></tr><tr><td><img src="images/calendar-watercolor.svg?v=84398fca7e1d" width="280" alt="수채화 양치식물 2026 daily contribution calendar" /></td><td><img src="images/calendar-herbarium.svg?v=1f2f8e7d088f" width="280" alt="동판화 허바리움 2026 daily contribution calendar" /></td><td><img src="images/calendar-midnight.svg?v=9b5671dae4a0" width="280" alt="미드나이트 식물 도감 2026 daily contribution calendar" /></td></tr></table>
 
 ## 날짜와 색
 
