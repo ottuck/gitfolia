@@ -1,0 +1,10 @@
+import fs from 'node:fs';
+import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..'),out=path.resolve(process.argv[2]||path.join(root,'images/calendar-preview.html'));
+const themes=['watercolor','herbarium','midnight'],values=[JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json'))),...themes.map(theme=>JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json'))))];
+const engine=fs.readFileSync(path.join(root,'scripts/calendar.mjs'),'utf8').replace(/^export /gm,'');
+const app=fs.readFileSync(path.join(root,'calendar-preview/app.js'),'utf8').split('\n').filter(line=>!line.startsWith('import ')).map(line=>line.trimStart().startsWith('const values=await Promise.all(')?' const values='+JSON.stringify(values)+';':line).join('\n');
+let html=fs.readFileSync(path.join(root,'calendar-preview/index.html'),'utf8');
+html=html.replace('<link rel="stylesheet" href="style.css">',()=>'<style>'+fs.readFileSync(path.join(root,'calendar-preview/style.css'),'utf8')+'</style>');
+html=html.replace('<script type="module" src="app.js"></script>',()=>'<script type="module">\n'+engine+'\n'+app+'\n</script>');
+fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,html);console.log('Saved self-contained preview: '+out);

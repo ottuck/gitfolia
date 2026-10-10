@@ -1,4 +1,4 @@
-name: Render botanical README
+name: Legacy goal-based botanical study
 
 on:
   workflow_dispatch:

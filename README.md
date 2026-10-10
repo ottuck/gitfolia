@@ -1,38 +1,38 @@
-# Botanical garden
+# Botanical calendar
 
-커밋이 쌓일수록 잎에 색이 깃드는 보태니컬 포스터입니다. 현재는 **비공개 개발 단계**입니다.
+하루에 잎 하나. GitHub의 기여 기록을 수채화 양치식물, 동판화 허바리움, 미드나이트 식물 도감으로 표현합니다. **비공개 개발 중**입니다.
 
-**2026년 · 시험 1,500 / 목표 3,000커밋 · 50.0% · 완성까지 1,500커밋**
+**2026년 · @ottuck 실제 GitHub 기여 · 2026-10-10 UTC 기준 · 1,317 contributions · 73 active days**
 
-채색 방식: 랜덤 분산
+<table><tr><th>수채화 양치식물</th><th>동판화 허바리움</th><th>미드나이트 식물 도감</th></tr><tr><td><img src="images/calendar-watercolor.svg?v=39d93f6ba9f5" width="280" alt="수채화 양치식물 2026 daily contribution calendar" /></td><td><img src="images/calendar-herbarium.svg?v=d9cd513954bd" width="280" alt="동판화 허바리움 2026 daily contribution calendar" /></td><td><img src="images/calendar-midnight.svg?v=3d134bc61e3e" width="280" alt="미드나이트 식물 도감 2026 daily contribution calendar" /></td></tr></table>
 
-<table><tr><th>은행나무 · Ginkgo biloba</th><th>양치식물 · Fern study</th></tr><tr><td><img src="images/01-sketch-bloom.svg?v=5f4d9bda3d6e" width="360" alt="은행나무 1500/3000 채색" /></td><td><img src="images/02-watercolor-fern.svg?v=68f52a21cf99" width="360" alt="양치식물 1500/3000 채색" /></td></tr></table>
+## 날짜와 색
 
-## 이번 버전
+- 연도 전체를 고정합니다. 평년에는 일별 잎 365개, 윤년에는 366개이며 날짜가 바뀌어도 이전 잎의 위치는 같습니다.
+- 일별 잎은 GitHub GraphQL의 contributionLevel(0–4)을 그대로 사용합니다. 커밋뿐 아니라 GitHub가 인정하는 다른 기여도 포함됩니다.
+- 네 큰 줄기를 따라 주별 작은 가지를 배치합니다. 작은 가지의 일별 잎은 날짜순입니다. 큰 요약 잎은 일요일부터 토요일까지의 주 평균입니다.
+- 주 평균은 이미 지난 날짜의 기여 수를 더하고 날짜 수로 나눕니다. 0인 날도 포함하며 미래 날짜는 제외합니다. 연초·연말의 일부 주는 그 연도에 속하는 날만 사용합니다. 요약 색은 최대 주 평균에 대한 네 단계이며 GitHub의 일별 색 공식과 다릅니다.
+- 활동 없는 날은 선화, 미래 날짜는 더 옅은 선화입니다. 줄기와 뿌리는 항상 채색되어 있습니다. 모든 잎이 채워지는 목표 수치는 없습니다.
+- 세 테마는 같은 날짜 배치를 공유합니다. 원화 후보의 잎을 그대로 세는 방식 대신, 각 화풍으로 만든 8개 잎 변형을 정확한 날짜 수에 맞춰 조합합니다.
+- SVG는 내장 PNG 잎과 도형만 사용합니다. JavaScript와 외부 리소스 요청이 없습니다. URL 해시로 README 이미지 캐시를 갱신합니다.
 
-- 모든 잎이 채색된 은행나무 완성 원화를 사용합니다. 목표에 도달하면 두 그림 모두 완성 원화가 됩니다.
-- 잎의 색 윤곽을 따라 만든 영역이 전체 잎 단위로 서서히 채워집니다. 맞붙은 잎 일부는 묶이거나 나뉠 수 있습니다.
-- 여러 지점에서 퍼지기 / 가까운 잎 하나씩 / 랜덤 분산을 선택할 수 있습니다. 같은 수치·순서·연도는 같은 그림을 만듭니다.
-- 목표에 도달한 뒤에는 완성 상태를 유지합니다. 한 해의 완성 기준은 설정한 목표 커밋 수입니다.
-- SVG 안의 이미지는 WebP로 압축합니다. 스크립트나 외부 이미지 요청은 없습니다. 현재 채색 중인 작은 잎 영역만 6초 주기로 은은하게 강조됩니다.
-- 이미지 해시로 URL 버전 값을 바꿔 이전 그림의 캐시를 피합니다.
+## 실행과 미리보기
 
-## 실행
-
-Actions → **Render botanical README**에서 수치, 목표, 순서를 선택합니다. 실행 후 이미지와 README가 자동 커밋됩니다.
-
-로컬:
+Actions → **Update botanical calendar** → 계정과 연도를 입력하면 기여 기록, 세 이미지, README가 갱신됩니다. 매일 00:20 UTC에도 갱신됩니다. 현재 기본 계정은 ottuck입니다.
 
 ```sh
 npm ci --ignore-scripts
-npm run render -- 1500 3000 spread 2026
+npm run verify
+npm run render -- ottuck 2026 github
 python -m http.server 8767 --bind 127.0.0.1
 ```
 
-브라우저에서 http://127.0.0.1:8767/preview/ 를 열면 슬라이더, 완성 상태, 채색 순서를 비교할 수 있습니다.
+[로컬 미리보기](http://127.0.0.1:8767/calendar-preview/)에서 세 테마 비교, 날짜별 확인, 윤년 예시, 주 요약 표시, SVG 저장이 가능합니다. 브라우저는 저장된 실제 기록을 읽으며 토큰을 사용하지 않습니다.
 
-## 다음 연결
+## 인증과 공개
 
-현재 수치는 시험 입력입니다. 실제 사용자 활동 집계와 커밋 발생에 따른 실행은 아직 연결하지 않았습니다. 목표를 바꾸면 진행률도 바뀝니다. 미채색 상태는 원화에서 추출한 연필 표현이며 별도 수작업 선화는 아닙니다.
+로컬 수집은 GH_TOKEN/GITHUB_TOKEN 또는 기존 gh 로그인을 사용합니다. Actions는 기존 GITHUB_TOKEN을 사용합니다. 기본 Actions 토큰으로 비공개 개인 기여까지 모두 조회할 수 있다고 보장하지 않습니다. 그런 기록이 필요하면 read:user 권한이 있는 토큰을 저장소 secret BOTANICAL_TOKEN에 설정할 수 있습니다. 비공개 기여를 포함한 집계 파일은 공개 전 검토하세요.
 
-공개 전에는 [프로필 삽입 코드](PROFILE-EMBED.md)의 URL을 사용한 공개 프로필 표시가 제한됩니다.
+현재 저장소는 비공개이므로 외부 공개 프로필의 이미지 표시는 제한됩니다. 공개 전환 후 [프로필 삽입 코드](PROFILE-EMBED.md)를 사용할 수 있습니다.
+
+이전 목표 커밋 기반 PoC는 scripts/render-v2.mjs와 preview/에 남아 있습니다.

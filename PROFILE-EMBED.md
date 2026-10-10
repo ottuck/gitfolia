@@ -1,13 +1,23 @@
 # 프로필 삽입 코드
 
-현재 저장소는 비공개입니다. 완성 후 공개 전환한 다음 아래 코드를 사용할 수 있습니다. 현재 그림은 1500/3000, random, 2026 상태입니다.
+현재 비공개 저장소입니다. 공개 전환 후 사용할 수 있습니다.
+
+## 수채화 양치식물
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/01-sketch-bloom.svg?v=5f4d9bda3d6e" width="360" alt="Botanical garden · Ginkgo" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-watercolor.svg?v=39d93f6ba9f5" width="420" alt="수채화 양치식물 · 2026" />
 ```
+
+## 동판화 허바리움
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/02-watercolor-fern.svg?v=68f52a21cf99" width="360" alt="Botanical garden · Fern" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-herbarium.svg?v=d9cd513954bd" width="420" alt="동판화 허바리움 · 2026" />
 ```
 
-이미지가 바뀌면 이 문서의 버전 값도 갱신됩니다. 실제 프로필에 자동 연결할 때는 프로필 README의 버전 값도 함께 갱신해야 합니다. 열린 README가 커밋 발생을 실시간으로 감지하는 방식은 아닙니다.
+## 미드나이트 식물 도감
+
+```markdown
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-midnight.svg?v=3d134bc61e3e" width="420" alt="미드나이트 식물 도감 · 2026" />
+```
+
+이미지가 갱신되면 이 문서의 버전 값도 갱신됩니다. 실제 프로필 README를 자동으로 변경하지는 않습니다.

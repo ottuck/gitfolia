@@ -4,8 +4,10 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "render": "node scripts/render-v2.mjs",
-    "verify": "node scripts/verify-v2.mjs"
+    "render": "node scripts/render-calendar.mjs",
+    "verify": "node scripts/verify-calendar.mjs",
+    "verify:legacy": "node scripts/verify-v2.mjs",
+    "build:sprites": "node scripts/build-sprites.mjs"
   },
   "dependencies": {
     "pngjs": "7.0.0",
