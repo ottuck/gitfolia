@@ -9,8 +9,11 @@ import {createHash} from 'node:crypto';
 // This deliberately does not use the renderer's normalization/layout helpers.
 const root=path.resolve(import.meta.dirname,'..');
 const readme=fs.readFileSync(path.join(root,'README.md'),'utf8');
-assert.equal((readme.match(/<img\b/g)||[]).length,1,'README must display exactly one plant');
-assert(/<img src="images\/calendar-watercolor\.svg\?v=[a-f0-9]+"/.test(readme),'README must display the current watercolor image');
+// Copyable examples are code, not displayed artwork. The service README shows
+// the hosted image; the independent checks below verify the generated archive.
+const displayedReadme=readme.replace(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gm,'');
+assert.equal((displayedReadme.match(/<img\b/g)||[]).length,1,'README must display exactly one plant');
+assert(/<img src="https:\/\/botanical-garden\.ottuck\.workers\.dev\/ottuck"/.test(displayedReadme),'README must display the hosted Commit Bloom image');
 const snapshot=JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json')));
 const body={query:'query($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection(from:$from,to:$to){contributionCalendar{weeks{contributionDays{date contributionCount contributionLevel}}}}}}',variables:{login:snapshot.login,from:`${snapshot.year}-01-01T00:00:00Z`,to:`${snapshot.asOf}T23:59:59Z`}};
 const token=process.env.GH_TOKEN||process.env.GITHUB_TOKEN;let payload;
