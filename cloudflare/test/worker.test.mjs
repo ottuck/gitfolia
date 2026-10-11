@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { test } from 'node:test';
 import fs from 'node:fs';
 import { Miniflare, convertV4MiniflareOptions, Response } from 'miniflare';
+import { BREEZE_REVISION } from '../../scripts/calendar.mjs';
 
 const DAY = 86_400_000;
 const schema = fs.readFileSync(new URL('../migrations/0001_gardens.sql', import.meta.url), 'utf8');
@@ -350,7 +351,7 @@ test('breeze and still share one GitHub snapshot, registration and refresh; stan
 test('an existing static garden gains a missing breeze image without duplicate registration', async t => {
   const h = await harness(t);
   await (await h.get('/ottuck?year=2024')).text();
-  await h.bucket.delete('ottuck/2024.breeze.svg');
+  await h.bucket.delete(`ottuck/2024.breeze-v${BREEZE_REVISION}.svg`);
   const response = await h.get('/ottuck?year=2024&motion=breeze');
   assert.equal(response.status, 200);
   checkLeaves(await response.text(), h.state.calls[1], 'regression');

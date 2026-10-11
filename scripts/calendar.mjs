@@ -1,5 +1,7 @@
 export const LEVELS = ['NONE','FIRST_QUARTILE','SECOND_QUARTILE','THIRD_QUARTILE','FOURTH_QUARTILE'];
 export const PUBLISHED_THEMES = ['watercolor'];
+// Bump when breeze artwork changes so stored images are rebuilt on demand.
+export const BREEZE_REVISION = 2;
 export const THEMES = {
  watercolor:{name:'수채화 양치식물',latin:'Watercolor fern',paper:'#f6f0e2',ink:'#685b43',stem:'#82714c',light:'#ae9a6a',line:'#b3a58b',dark:false},
  herbarium:{name:'동판화 허바리움',latin:'Engraved herbarium',paper:'#f4eddc',ink:'#554934',stem:'#6a583a',light:'#9c8252',line:'#97866c',dark:false},
@@ -100,9 +102,9 @@ export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=
    const groups=frond.weeks.map(week=>{
     const leaves=model.leaves.filter(leaf=>leaf.week===week.index).map(leaf=>leafTag(leaf,'day')).join('');
     const summary=weekly?leafTag(model.summaries[week.index],'week'):'';
-    return `<g class="breeze-branch" data-motion-week="${week.index}" style="transform-origin:${week.base.x.toFixed(2)}px ${week.base.y.toFixed(2)}px;--sway:${(.8+.4*jitter(week.index)).toFixed(2)}deg;animation-duration:${(8+4*jitter(week.index+90)).toFixed(2)}s;animation-delay:-${(12*jitter(week.index+180)).toFixed(2)}s">${stroke([week.path],1.1)}${leaves}${summary}</g>`;
+    return `<g class="breeze-branch" data-motion-week="${week.index}" style="transform-origin:${week.base.x.toFixed(2)}px ${week.base.y.toFixed(2)}px;--sway:${(1.25+.6*jitter(week.index)).toFixed(2)}deg;animation-duration:${(8+4*jitter(week.index+90)).toFixed(2)}s;animation-delay:-${(12*jitter(week.index+180)).toFixed(2)}s">${stroke([week.path],1.1)}${leaves}${summary}</g>`;
    }).join('');
-   return `<g class="breeze-frond" data-motion-frond="${frond.index}" style="transform-origin:${frond.base.x}px ${frond.base.y}px;--sway:${[.8,.65,.75,.85][frond.index]}deg;animation-duration:${[10,11.7,12.8,10.9][frond.index]}s;animation-delay:-${[0,3,6,1.5][frond.index]}s">${stroke([model.stems[frond.index]],3.3)}${groups}</g>`;
+   return `<g class="breeze-frond" data-motion-frond="${frond.index}" style="transform-origin:${frond.base.x}px ${frond.base.y}px;--sway:${[1.4,1.15,1.3,1.5][frond.index]}deg;animation-duration:${[10,11.7,12.8,10.9][frond.index]}s;animation-delay:-${[0,3,6,1.5][frond.index]}s">${stroke([model.stems[frond.index]],3.3)}${groups}</g>`;
   }).join('');
   plant=`<g stroke-linecap="round" stroke-linejoin="round">${roots}${moving}</g>`;
  }

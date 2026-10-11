@@ -1,4 +1,4 @@
-import { calendarSvg } from '../../scripts/calendar.mjs';
+import { calendarSvg, BREEZE_REVISION } from '../../scripts/calendar.mjs';
 import sprites from '../../artwork/calendar/watercolor-sprites.json';
 import { fetchGitHubCalendar, GardenError } from './github';
 import { previewResponse } from './preview';
@@ -23,6 +23,7 @@ interface Garden {
 const HOUR = 3_600_000;
 const LEASE = 120_000;
 const CACHE = 'public, max-age=3600, s-maxage=3600';
+const breezeKey = (key: string) => key.replace(/\.svg$/, `.breeze-v${BREEZE_REVISION}.svg`);
 
 function nextRefresh(now: number) {
   const next = new Date(now);
@@ -57,7 +58,7 @@ function parseGarden(url: URL, now: number) {
   }
   const garden_key = `${login}/${requested_year || 'current'}.svg`;
   return { login, requested_year, motion, garden_key,
-    image_key: motion === 'breeze' ? garden_key.replace(/\.svg$/, '.breeze.svg') : garden_key };
+    image_key: motion === 'breeze' ? breezeKey(garden_key) : garden_key };
 }
 
 function errorResponse(error: unknown, head = false) {
@@ -111,7 +112,7 @@ async function refreshGarden(env: Env, garden: Pick<Garden, 'garden_key' | 'logi
     const data = await fetchGitHubCalendar(garden.login, year, env.GITHUB_TOKEN, now);
     for (const motion of ['none', 'breeze'] as const) {
       const svg = calendarSvg(data, { theme: 'watercolor', sprites, motion });
-      const key = motion === 'breeze' ? garden.garden_key.replace(/\.svg$/, '.breeze.svg') : garden.garden_key;
+      const key = motion === 'breeze' ? breezeKey(garden.garden_key) : garden.garden_key;
       await env.GARDENS.put(key, svg, {
         httpMetadata: { contentType: 'image/svg+xml; charset=utf-8', cacheControl: CACHE },
         customMetadata: {

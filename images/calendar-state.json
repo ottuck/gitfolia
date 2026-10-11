@@ -11,12 +11,12 @@
       "theme": "watercolor",
       "name": "수채화 양치식물",
       "filename": "calendar-watercolor.svg",
-      "sha256": "a1e900fa0a8a1efcec1545ba3d5c06660ca8c6d929d8b07fca4177a1d3b6f93d",
+      "sha256": "8f3167f711304fbefc542a5b35aabceed155234df6bfb23afac0d0e92ede4153",
       "bytes": 445566,
       "dailyLeaves": 365,
       "weeklyLeaves": 53,
       "animatedFilename": "calendar-watercolor-breeze.svg",
-      "animatedSha256": "2bea812fbde90b6adac7126cd623d7cb5d7839cfb4130cf284c2c84d05969d0a"
+      "animatedSha256": "4333de3246d43b5412647b1e36f29cda503a66884e83a3ec357d5b44ec80579a"
     }
   ]
 }
