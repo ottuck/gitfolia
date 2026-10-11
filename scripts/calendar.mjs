@@ -46,15 +46,17 @@ export function weeksForCalendar(data){
 const jitter=i=>{let n=Math.imul(i+73,0x45d9f3b);return ((n^(n>>>16))>>>0)/4294967296;};
 const point=(p,t)=>({x:(1-t)**2*p[0].x+2*(1-t)*t*p[1].x+t*t*p[2].x,y:(1-t)**2*p[0].y+2*(1-t)*t*p[1].y+t*t*p[2].y});
 export function plantLayout(data){
- const weeks=weeksForCalendar(data),leaves=[],summaries=[],branches=[],stems=[];
+ const weeks=weeksForCalendar(data),leaves=[],summaries=[],branches=[],stems=[],fronds=[];
  const curves=[[{x:481,y:1160},{x:320,y:900},{x:205,y:400}],[{x:503,y:1160},{x:420,y:710},{x:370,y:135}],[{x:522,y:1160},{x:650,y:710},{x:665,y:145}],[{x:544,y:1160},{x:800,y:910},{x:850,y:410}]];
  for(let q=0;q<4;q++){
   const selected=weeks.slice(Math.floor(q*weeks.length/4),Math.floor((q+1)*weeks.length/4)),p=curves[q];stems.push(`M${p[0].x} ${p[0].y} Q${p[1].x} ${p[1].y} ${p[2].x} ${p[2].y}`);
+  const frond={index:q,base:p[0],weeks:[]};fronds.push(frond);
   selected.forEach((week,row)=>{
    const t=.15+.78*row/Math.max(1,selected.length-1),base=point(p,t),near=point(p,t+.001),tangent=Math.atan2(near.y-base.y,near.x-base.x),side=row%2?1:-1;
    const angle=tangent+side*(1.05+.08*jitter(week.index)),dx=Math.cos(angle),dy=Math.sin(angle);
    const room=dx>0?(914-base.x)/dx:(90-base.x)/dx,length=Math.max(50,Math.min(138+30*Math.sin(t*Math.PI),room)),end={x:base.x+dx*length,y:base.y+dy*length};
-   branches.push(`M${base.x} ${base.y} Q${base.x+dx*length*.56} ${base.y+dy*length*.56-5} ${end.x} ${end.y}`);
+   const branch=`M${base.x} ${base.y} Q${base.x+dx*length*.56} ${base.y+dy*length*.56-5} ${end.x} ${end.y}`;
+   branches.push(branch);frond.weeks.push({index:week.index,base,path:branch});
    week.days.forEach((day,j)=>{
     const pair=Math.floor(j/2);
     const u=.20+.19*pair+(j%2)*.018,sign=j%2?1:-1,a=angle+sign*1.02;
@@ -63,14 +65,15 @@ export function plantLayout(data){
    summaries.push({...week,x:end.x,y:end.y,angle:angle*180/Math.PI,length:59,variant:week.index%8});
   });
  }
- return {width:1024,height:1536,leaves,summaries,branches,stems};
+ return {width:1024,height:1536,leaves,summaries,branches,stems,fronds};
 }
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
 /**
  * @param {ReturnType<typeof normalizeCalendar>} data
- * @param {{theme?:string,sprites:{theme:string,tiles:Record<string,{width:number,height:number,uri:string}>},weekly?:boolean,labels?:boolean}} options
+ * @param {{theme?:string,sprites:{theme:string,tiles:Record<string,{width:number,height:number,uri:string}>},weekly?:boolean,labels?:boolean,motion?:'none'|'breeze'}} options
  */
-export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=true}={}){
+export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=true,motion='none'}={}){
+ if(!['none','breeze'].includes(motion))throw new Error('Unknown motion mode');
  const palette=THEMES[theme];if(!palette||!sprites||sprites.theme!==theme)throw new Error('Missing or mismatched theme sprites');
  const model=plantLayout(data),used=new Map(),active=data.days.filter(d=>!d.future&&d.count>0).length,total=data.days.reduce((n,d)=>n+(d.count||0),0);
  const leafTag=(leaf,kind)=>{
@@ -88,5 +91,20 @@ export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=
   for(let hair=0;hair<3;hair++){const t=.45+hair*.15,rx=x+(endx-x)*t,ry=1156+(endy-1156)*t;roots+=`<path d="M${rx.toFixed(1)} ${ry.toFixed(1)} q${side*(12+jitter(i+hair)*15)} 14 ${side*(25+jitter(i+hair+2)*22)} 25" fill="none" stroke="${palette.stem}" stroke-width=".5" opacity=".6"/>`;}
  }
  const text=labels?`<text x="512" y="70" text-anchor="middle" font-family="Georgia,serif" font-size="21" letter-spacing="4" fill="${palette.ink}">${data.year} · A YEAR IN LEAVES</text><path d="M468 1380 H556" stroke="${palette.light}" stroke-width="1" opacity=".65"/><text x="512" y="1418" text-anchor="middle" font-family="Georgia,serif" font-size="28" font-style="italic" fill="${palette.ink}">Grown from <tspan font-size="36" font-style="normal">${total.toLocaleString('en-US')}</tspan> contributions.</text><text x="512" y="1460" text-anchor="middle" font-family="Georgia,serif" font-size="22" fill="${palette.ink}">${active} active days · ${esc(data.source==='github'&&data.login?'@'+data.login+' on GitHub':'a botanical study')}</text><text x="512" y="1495" text-anchor="middle" font-family="sans-serif" font-size="13" letter-spacing="2" fill="${palette.ink}" opacity=".75">ONE LEAF FOR EACH DAY · ${data.year}</text>`:'';
- return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1536" viewBox="0 0 1024 1536" role="img"><title>${esc(palette.name+' · '+data.year+' · '+data.login)}</title><desc>One leaf per date. Daily shades use GitHub contributionLevel. Larger leaves summarize a Sunday-based week using mean contribution counts. Future dates are faint. ${esc(data.source)} data as of ${data.asOf}.</desc><defs>${defs}<filter id="paper-grain-${theme}"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".035"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter></defs><rect width="1024" height="1536" fill="${palette.paper}"/><rect width="1024" height="1536" fill="${palette.paper}" filter="url(#paper-grain-${theme})"/>${text}<g stroke-linecap="round" stroke-linejoin="round">${stroke(model.stems,3.3)}${stroke(model.branches,1.1)}${roots}</g>${foliage}</svg>\n`;
+ let motionStyle='',plant=`<g stroke-linecap="round" stroke-linejoin="round">${stroke(model.stems,3.3)}${stroke(model.branches,1.1)}${roots}</g>${foliage}`;
+ if(motion==='breeze'){
+  // Each attachment point remains fixed in its parent's coordinate system.
+  // CSS animations also work when this SVG is embedded as a script-free image.
+  motionStyle='<style>.breeze-frond,.breeze-branch{transform-box:view-box;animation-name:leaf-breeze;animation-timing-function:ease-in-out;animation-iteration-count:infinite}@keyframes leaf-breeze{0%,100%{transform:rotate(calc(-1 * var(--sway)))}50%{transform:rotate(var(--sway))}}@media(prefers-reduced-motion:reduce){.breeze-frond,.breeze-branch{animation:none;transform:none}}</style>';
+  const moving=model.fronds.map(frond=>{
+   const groups=frond.weeks.map(week=>{
+    const leaves=model.leaves.filter(leaf=>leaf.week===week.index).map(leaf=>leafTag(leaf,'day')).join('');
+    const summary=weekly?leafTag(model.summaries[week.index],'week'):'';
+    return `<g class="breeze-branch" data-motion-week="${week.index}" style="transform-origin:${week.base.x.toFixed(2)}px ${week.base.y.toFixed(2)}px;--sway:${(.5+.25*jitter(week.index)).toFixed(2)}deg;animation-duration:${(8+4*jitter(week.index+90)).toFixed(2)}s;animation-delay:-${(12*jitter(week.index+180)).toFixed(2)}s">${stroke([week.path],1.1)}${leaves}${summary}</g>`;
+   }).join('');
+   return `<g class="breeze-frond" data-motion-frond="${frond.index}" style="transform-origin:${frond.base.x}px ${frond.base.y}px;--sway:${[.23,.19,.22,.25][frond.index]}deg;animation-duration:${[10,11.7,12.8,10.9][frond.index]}s;animation-delay:-${[0,3,6,1.5][frond.index]}s">${stroke([model.stems[frond.index]],3.3)}${groups}</g>`;
+  }).join('');
+  plant=`<g stroke-linecap="round" stroke-linejoin="round">${roots}${moving}</g>`;
+ }
+ return `<svg xmlns="http://www.w3.org/2000/svg" width="1024" height="1536" viewBox="0 0 1024 1536" role="img"><title>${esc(palette.name+' · '+data.year+' · '+data.login)}</title><desc>One leaf per date. Daily shades use GitHub contributionLevel. Larger leaves summarize a Sunday-based week using mean contribution counts. Future dates are faint. ${esc(data.source)} data as of ${data.asOf}.</desc>${motionStyle}<defs>${defs}<filter id="paper-grain-${theme}"><feTurbulence type="fractalNoise" baseFrequency=".6" numOctaves="2" seed="7"/><feColorMatrix type="saturate" values="0"/><feComponentTransfer><feFuncA type="linear" slope=".035"/></feComponentTransfer><feBlend in="SourceGraphic" mode="multiply"/></filter></defs><rect width="1024" height="1536" fill="${palette.paper}"/><rect width="1024" height="1536" fill="${palette.paper}" filter="url(#paper-grain-${theme})"/>${text}${plant}</svg>\n`;
 }

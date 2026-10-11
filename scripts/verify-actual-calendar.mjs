@@ -13,7 +13,7 @@ const readme=fs.readFileSync(path.join(root,'README.md'),'utf8');
 // the hosted image; the independent checks below verify the generated archive.
 const displayedReadme=readme.replace(/^```[^\n]*\n[\s\S]*?^```[ \t]*$/gm,'');
 assert.equal((displayedReadme.match(/<img\b/g)||[]).length,1,'README must display exactly one plant');
-assert(/<img src="https:\/\/botanical-garden\.ottuck\.workers\.dev\/ottuck"/.test(displayedReadme),'README must display the hosted GitFolia image');
+assert(/<img src="https:\/\/botanical-garden\.ottuck\.workers\.dev\/ottuck"/.test(displayedReadme),'README must display the hosted GitLeaf image');
 const snapshot=JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json')));
 const body={query:'query($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection(from:$from,to:$to){contributionCalendar{weeks{contributionDays{date contributionCount contributionLevel}}}}}}',variables:{login:snapshot.login,from:`${snapshot.year}-01-01T00:00:00Z`,to:`${snapshot.asOf}T23:59:59Z`}};
 const token=process.env.GH_TOKEN||process.env.GITHUB_TOKEN;let payload;
@@ -41,8 +41,8 @@ const weeks=[];for(const date of dates){if(!weeks.length||new Date(date+'T00:00:
 const means=weeks.map(week=>{const past=week.filter(date=>date<=snapshot.asOf);return past.length?past.reduce((n,date)=>n+api.get(date).contributionCount,0)/past.length:null;});
 const maximum=Math.max(0,...means.filter(x=>x!==null));
 const themes=['watercolor'],images=[];
-for(const theme of themes){
- const file=`calendar-${theme}.svg`,svg=fs.readFileSync(path.join(root,'images',file),'utf8');
+for(const theme of themes)for(const motion of ['none','breeze']){
+ const file=`calendar-${theme}${motion==='breeze'?'-breeze':''}.svg`,svg=fs.readFileSync(path.join(root,'images',file),'utf8');
  const sprites=JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json')));
  const symbols=new Map([...svg.matchAll(/<symbol id="([^"]+)"[^>]*><image href="([^"]+)"/g)].map(m=>[m[1],m[2]]));
  const daily=[...svg.matchAll(/<g data-kind="day" ([^>]+)><title>([^<]*)<\/title><use href="#([^"]+)"[^>]*\/><\/g>/g)];
@@ -61,7 +61,7 @@ for(const theme of themes){
   assert.equal(symbols.get(summaries[i][3]),sprites.tiles[`${i%8}-${level}`].uri);
   if(means[i]!==null)assert(summaries[i][2].includes(means[i].toFixed(1)+' contributions/day'));
  }
- images.push({theme,file,sha256:createHash('sha256').update(svg).digest('hex'),dailyLeavesChecked:daily.length,weeklyLeavesChecked:summaries.length,mismatches:0});
+ images.push({theme,motion,file,sha256:createHash('sha256').update(svg).digest('hex'),dailyLeavesChecked:daily.length,weeklyLeavesChecked:summaries.length,mismatches:0});
 }
 const report={checkedAt:new Date().toISOString(),login:snapshot.login,year:snapshot.year,asOf:snapshot.asOf,source:'Fresh GitHub GraphQL contributionCalendar response using the current authenticated scope',readmeDisplayedImages:1,readmeTheme:'watercolor',pastDatesChecked:dates.filter(d=>d<=snapshot.asOf).length,futureDatesChecked:dates.filter(d=>d>snapshot.asOf).length,totalContributions:snapshot.days.reduce((n,d)=>n+(d.count||0),0),levels:levels.map((name,level)=>{const days=snapshot.days.filter(d=>d.level===level);return {level,name,days:days.length,sample:days.sort((a,b)=>b.count-a.count)[0]};}),images,mismatches:0};
 const out=path.resolve(process.argv[2]||path.join(root,'images/calendar-validation.json'));fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,JSON.stringify(report,null,2)+'\n');

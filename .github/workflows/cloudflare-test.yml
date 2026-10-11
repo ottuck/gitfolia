@@ -1,4 +1,4 @@
-name: Test GitFolia Worker
+name: Test GitLeaf Worker
 on:
   push:
     paths:

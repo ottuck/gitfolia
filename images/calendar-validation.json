@@ -1,5 +1,5 @@
 {
-  "checkedAt": "2026-10-11T14:25:10.850Z",
+  "checkedAt": "2026-10-11T14:51:14.880Z",
   "login": "ottuck",
   "year": 2026,
   "asOf": "2026-10-11",
@@ -37,8 +37,8 @@
       "name": "SECOND_QUARTILE",
       "days": 5,
       "sample": {
-        "date": "2026-09-24",
-        "count": 33,
+        "date": "2026-09-26",
+        "count": 34,
         "level": 2,
         "future": false
       }
@@ -69,8 +69,18 @@
   "images": [
     {
       "theme": "watercolor",
+      "motion": "none",
       "file": "calendar-watercolor.svg",
-      "sha256": "2e814d2af71970f20ce29e535472e9ca37ead6393168f24c6f717569f3567745",
+      "sha256": "f0266fb06233ecc0d359629253ed90a0ac0db1f3e1a3a525230702c218aabb07",
+      "dailyLeavesChecked": 365,
+      "weeklyLeavesChecked": 53,
+      "mismatches": 0
+    },
+    {
+      "theme": "watercolor",
+      "motion": "breeze",
+      "file": "calendar-watercolor-breeze.svg",
+      "sha256": "4c472af4c4f12a2c247b251795e8ed8f2ef427852b72c7700d8cf275723ba0af",
       "dailyLeavesChecked": 365,
       "weeklyLeavesChecked": 53,
       "mismatches": 0

@@ -11,7 +11,10 @@ fs.writeFileSync(path.join(out,'calendar-data.json'),JSON.stringify(data,null,2)
 for(const theme of PUBLISHED_THEMES){
  const palette=THEMES[theme];
  const sprites=JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json'))),svg=calendarSvg(data,{theme,sprites}),sha=createHash('sha256').update(svg).digest('hex'),filename=`calendar-${theme}.svg`;
- fs.writeFileSync(path.join(out,filename),svg);results.push({theme,name:palette.name,filename,sha256:sha,bytes:Buffer.byteLength(svg),dailyLeaves:data.days.length,weeklyLeaves:(svg.match(/data-kind="week"/g)||[]).length});
+ fs.writeFileSync(path.join(out,filename),svg);
+ const animatedFilename=`calendar-${theme}-breeze.svg`,animated=calendarSvg(data,{theme,sprites,motion:'breeze'});
+ fs.writeFileSync(path.join(out,animatedFilename),animated);
+ results.push({theme,name:palette.name,filename,sha256:sha,bytes:Buffer.byteLength(svg),dailyLeaves:data.days.length,weeklyLeaves:(svg.match(/data-kind="week"/g)||[]).length,animatedFilename,animatedSha256:createHash('sha256').update(animated).digest('hex')});
 }
 const total=data.days.reduce((s,d)=>s+(d.count||0),0),active=data.days.filter(d=>d.count>0).length;
 fs.writeFileSync(path.join(out,'calendar-state.json'),JSON.stringify({schema:3,source:data.source,login:data.login,year,asOf:data.asOf,totalContributions:total,activeDays:active,images:results},null,2)+'\n');
