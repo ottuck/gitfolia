@@ -4,6 +4,12 @@
 
 [Cloudflare 이미지 서비스 사용·배포 안내](cloudflare/README.md) · [서버에서 제공하는 실제 그림](https://botanical-garden.ottuck.workers.dev/ottuck)
 
+프로필 README에 아래 한 줄을 붙여 넣으세요. `ottuck`을 자신의 GitHub 아이디로 바꾸면 됩니다. 가운데 정렬, 폭 320px로 표시되며 별도 Actions 설정 없이 매일 갱신됩니다.
+
+```html
+<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="320" alt="My GitHub botanical garden" /></p>
+```
+
 **2026년 · @ottuck 실제 GitHub 기여 · 2026-10-11 UTC 기준 · 1,337 contributions · 74 active days**
 
 [GitHub 기여 달력에서 확인](https://github.com/ottuck?tab=overview&from=2026-01-01&to=2026-10-11) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json) · [지금 기록 갱신](https://github.com/ottuck/botanical-readme-poc/actions/workflows/calendar.yml)

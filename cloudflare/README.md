@@ -9,12 +9,14 @@ Worker 한 개가 실제 GitHub 기여 기록을 수채화 식물로 만들어 �
 README에 아래 한 줄을 붙여 넣습니다. `ottuck`을 자신의 GitHub 아이디로 바꾸면 됩니다. 사용자별 GitHub Actions 설정이나 회원가입이 필요하지 않습니다.
 
 ```html
-<img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="480" alt="My GitHub botanical garden" />
+<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="320" alt="My GitHub botanical garden" /></p>
 ```
 
 [실제 그림 보기](https://botanical-garden.ottuck.workers.dev/ottuck)
 
-<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="480" alt="ottuck의 실제 GitHub 기여로 그린 수채화 식물" /></p>
+<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="320" alt="ottuck의 실제 GitHub 기여로 그린 수채화 식물" /></p>
+
+기본 예시는 가운데 정렬, 폭 320px입니다. `width`를 바꾸면 크기를 조절할 수 있습니다. 정렬은 복붙한 `<p align="center">`가 지정하며 이미지 서버에서 강제하지 않습니다. 프로필 README 맨 아래에 두면 프로젝트 소개 뒤에 작은 작품처럼 전시할 수 있습니다.
 
 Cloudflare가 제공하는 `workers.dev` 주소를 사용하므로 별도 도메인 구매가 필요하지 않습니다. `/사용자명` 주소는 확장자 없이 SVG 이미지를 반환합니다. 기존 `/garden/사용자명.svg` 주소도 같은 그림과 갱신 상태를 사용하므로 이미 붙인 코드를 바꿀 필요는 없습니다.
 
