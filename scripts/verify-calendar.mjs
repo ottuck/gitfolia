@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import {datesForYear,demoCalendar,normalizeCalendar,weeksForCalendar,plantLayout,calendarSvg,THEMES} from './calendar.mjs';
 import {verifyColorScale} from './verify-color-scale.mjs';
+import {verifyScenarios} from './verify-scenarios.mjs';
 for(const [year,count]of [[2026,365],[2024,366],[2012,366],[2100,365]]){
  const data=demoCalendar(year,`${year}-12-31`),model=plantLayout(data);
  assert.equal(datesForYear(year).length,count);assert.equal(model.leaves.length,count);assert.equal(new Set(model.leaves.map(l=>l.date)).size,count);assert.equal(model.leaves[0].date,`${year}-01-01`);assert.equal(model.leaves.at(-1).date,`${year}-12-31`);
@@ -25,4 +26,5 @@ for(const theme of Object.keys(THEMES)){
  const leap=calendarSvg(demoCalendar(2024),{theme,sprites});assert.equal((leap.match(/data-kind="day"/g)||[]).length,366);assert(leap.includes('2024-02-29'));
 }
 await verifyColorScale();
-console.log('Calendar verified: unique dates, leap years, fixed geometry, one-day updates, weekly means, three embedded-image themes, visibly separated color levels for all 24 leaf variants.');
+verifyScenarios();
+console.log('Calendar verified: unique dates, leap years, fixed geometry, one-day updates, weekly means, three embedded-image themes, visible 0-to-4 color levels, full-year and year-end contribution scenarios.');

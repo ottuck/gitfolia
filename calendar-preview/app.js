@@ -1,4 +1,4 @@
-import {THEMES,calendarSvg,demoCalendar,weeksForCalendar} from '../scripts/calendar.mjs';
+import {THEMES,calendarSvg,demoCalendar,scenarioCalendar,weeksForCalendar} from '../scripts/calendar.mjs';
 const $=id=>document.getElementById(id),sprites={},svgStrings={},themes=Object.keys(THEMES);let snapshot,data;
 for(const control of document.querySelectorAll('input,select,button'))control.disabled=true;
 const year=()=>Math.min(2100,Math.max(2000,Math.floor(Number($('year').value)||2026)));
@@ -17,12 +17,12 @@ function render(){
   legend.innerHTML=[0,1,2,3,4].map(level=>`<span><img src="${sprites[theme].tiles[`0-${level}`].uri}" alt="색 단계 ${level}"/><small>${level===0?'활동 없음':'단계 '+level}</small></span>`).join('');
  }
  $('date').min=data.days[0].date;$('date').max=data.days.at(-1).date;$('day-slider').max=data.days.length-1;
- $('data-status').textContent=data.source==='github'?`@${data.login} 실제 기록 · ${data.asOf} UTC`:`${data.year}년 예시 · ${data.days.length}개 일별 잎`;
+ $('data-status').textContent=data.source==='github'?`@${data.login} 실제 기록 · ${data.asOf} UTC`:`${data.year}년 ${data.scenario?'검증 데이터':'예시'} · 12월 31일까지 · ${data.days.length}개 일별 잎`;
  selectDate($('date').value);
 }
 function setData(){
  if($('source').value==='github'){data=structuredClone(snapshot);$('year').value=data.year;}
- else{const y=year();$('year').value=y;data=demoCalendar(y,`${y}-12-31`,$('source').value);}
+ else{const y=year(),source=$('source').value;$('year').value=y;data=['regression','year-end','dense'].includes(source)?scenarioCalendar(y,source):demoCalendar(y,`${y}-12-31`,source);}
  render();
 }
 function changeCount(count){

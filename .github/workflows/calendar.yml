@@ -1,6 +1,12 @@
 name: Update botanical calendar
 
 on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - 'README.md'
+      - 'PROFILE-EMBED.md'
+      - 'images/**'
   workflow_dispatch:
     inputs:
       login:

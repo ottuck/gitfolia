@@ -8,6 +8,9 @@ import {createHash} from 'node:crypto';
 // each exported SVG's count, level, opacity and actual sprite reference.
 // This deliberately does not use the renderer's normalization/layout helpers.
 const root=path.resolve(import.meta.dirname,'..');
+const readme=fs.readFileSync(path.join(root,'README.md'),'utf8');
+assert.equal((readme.match(/<img\b/g)||[]).length,1,'README must display exactly one plant');
+assert(/<img src="images\/calendar-watercolor\.svg\?v=[a-f0-9]+"/.test(readme),'README must display the current watercolor image');
 const snapshot=JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json')));
 const body={query:'query($login:String!,$from:DateTime!,$to:DateTime!){user(login:$login){contributionsCollection(from:$from,to:$to){contributionCalendar{weeks{contributionDays{date contributionCount contributionLevel}}}}}}',variables:{login:snapshot.login,from:`${snapshot.year}-01-01T00:00:00Z`,to:`${snapshot.asOf}T23:59:59Z`}};
 const token=process.env.GH_TOKEN||process.env.GITHUB_TOKEN;let payload;
@@ -57,6 +60,6 @@ for(const theme of themes){
  }
  images.push({theme,file,sha256:createHash('sha256').update(svg).digest('hex'),dailyLeavesChecked:daily.length,weeklyLeavesChecked:summaries.length,mismatches:0});
 }
-const report={checkedAt:new Date().toISOString(),login:snapshot.login,year:snapshot.year,asOf:snapshot.asOf,source:'Fresh GitHub GraphQL contributionCalendar response using the current authenticated scope',pastDatesChecked:dates.filter(d=>d<=snapshot.asOf).length,futureDatesChecked:dates.filter(d=>d>snapshot.asOf).length,totalContributions:snapshot.days.reduce((n,d)=>n+(d.count||0),0),levels:levels.map((name,level)=>{const days=snapshot.days.filter(d=>d.level===level);return {level,name,days:days.length,sample:days.sort((a,b)=>b.count-a.count)[0]};}),images,mismatches:0};
+const report={checkedAt:new Date().toISOString(),login:snapshot.login,year:snapshot.year,asOf:snapshot.asOf,source:'Fresh GitHub GraphQL contributionCalendar response using the current authenticated scope',readmeDisplayedImages:1,readmeTheme:'watercolor',pastDatesChecked:dates.filter(d=>d<=snapshot.asOf).length,futureDatesChecked:dates.filter(d=>d>snapshot.asOf).length,totalContributions:snapshot.days.reduce((n,d)=>n+(d.count||0),0),levels:levels.map((name,level)=>{const days=snapshot.days.filter(d=>d.level===level);return {level,name,days:days.length,sample:days.sort((a,b)=>b.count-a.count)[0]};}),images,mismatches:0};
 const out=path.resolve(process.argv[2]||path.join(root,'images/calendar-validation.json'));fs.mkdirSync(path.dirname(out),{recursive:true});fs.writeFileSync(out,JSON.stringify(report,null,2)+'\n');
 console.log(JSON.stringify(report,null,2));

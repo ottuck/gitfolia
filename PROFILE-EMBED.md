@@ -5,19 +5,19 @@
 ## 수채화 양치식물
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-watercolor.svg?v=d22d7871d015" width="420" alt="수채화 양치식물 · 2026" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-watercolor.svg?v=d528d922a19e" width="420" alt="수채화 양치식물 · 2026" />
 ```
 
 ## 동판화 허바리움
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-herbarium.svg?v=8eaa07f0317f" width="420" alt="동판화 허바리움 · 2026" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-herbarium.svg?v=c1af06ea3f5a" width="420" alt="동판화 허바리움 · 2026" />
 ```
 
 ## 미드나이트 식물 도감
 
 ```markdown
-<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-midnight.svg?v=4f45184856b8" width="420" alt="미드나이트 식물 도감 · 2026" />
+<img src="https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/calendar-midnight.svg?v=ab1138bda454" width="420" alt="미드나이트 식물 도감 · 2026" />
 ```
 
 이미지가 갱신되면 이 문서의 버전 값도 갱신됩니다. 실제 프로필 README를 자동으로 변경하지는 않습니다.

@@ -3,16 +3,16 @@
   "source": "github",
   "login": "ottuck",
   "year": 2026,
-  "asOf": "2026-10-10",
-  "totalContributions": 1319,
-  "activeDays": 73,
+  "asOf": "2026-10-11",
+  "totalContributions": 1324,
+  "activeDays": 74,
   "images": [
     {
       "theme": "watercolor",
       "name": "수채화 양치식물",
       "filename": "calendar-watercolor.svg",
-      "sha256": "d22d7871d015cc0cbf9e703f547d3bcc275aca7e5e091e1282ddcc8b30169b00",
-      "bytes": 414696,
+      "sha256": "d528d922a19e24224b7710d40451b0de8f67511653ca1bfcd0d4551b73a2018d",
+      "bytes": 423425,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
     },
@@ -20,8 +20,8 @@
       "theme": "herbarium",
       "name": "동판화 허바리움",
       "filename": "calendar-herbarium.svg",
-      "sha256": "8eaa07f0317f57d65bf9e8adee07f2383bb1d2cbcf7667aa377ddb75caadd862",
-      "bytes": 420221,
+      "sha256": "c1af06ea3f5a911669fbf8c12e8da0d4b705873a485fdcee569d425bebf6a583",
+      "bytes": 429390,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
     },
@@ -29,8 +29,8 @@
       "theme": "midnight",
       "name": "미드나이트 식물 도감",
       "filename": "calendar-midnight.svg",
-      "sha256": "4f45184856b8276c756177c182c7f30c61357c1033e817d5c6b8ae6d72d2ce4d",
-      "bytes": 414491,
+      "sha256": "ab1138bda454203e0f8a1af341fd26b0a41a84ca6616b56e6c204bc5a2c4161e",
+      "bytes": 424860,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
     }

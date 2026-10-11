@@ -17,13 +17,13 @@ for(const [theme,palette]of Object.entries(THEMES)){
    const j=(y*width+x)*4,a=original[j+3];if(!a)continue;
    const neighbors=[[x-1,y],[x+1,y],[x,y-1],[x,y+1]].map(([xx,yy])=>xx<0||yy<0||xx>=width||yy>=height?-1:(yy*width+xx)*4);
    const edge=Math.max(...neighbors.map(k=>k<0?a:Math.abs(a-original[k+3])))/255,vein=Math.max(...neighbors.filter(k=>k>=0).map(k=>Math.abs(lum(j)-lum(k))))/255;
-   sketch[j]=ink[0];sketch[j+1]=ink[1];sketch[j+2]=ink[2];sketch[j+3]=Math.round(a*Math.min(1,.045+edge*2.7+vein*2.5));
+   sketch[j]=ink[0];sketch[j+1]=ink[1];sketch[j+2]=ink[2];sketch[j+3]=Math.round(a*Math.min(1,.045+edge*2.7+vein*2.5)*(palette.dark?.18:.22));
   }
   for(let level=0;level<=4;level++){
-   const buffer=level===0?sketch:Buffer.from(original),opacity=[0,.24,.47,.74,1][level];
+   const buffer=level===0?sketch:Buffer.from(original),opacity=[0,.38,.59,.80,1][level];
    // Preserve each illustration's hue and texture, but separate both paint density
    // and brightness. On midnight paper, more activity means brighter pigment.
-   const gain=(palette.dark?[0,.80,1,1.20,1.42]:[0,1.08,.96,.80,.64])[level];
+   const gain=(palette.dark?[0,.90,1,1.20,1.42]:[0,1.04,.96,.80,.64])[level];
    if(level)for(let j=0;j<buffer.length;j+=4){
     for(let channel=0;channel<3;channel++)buffer[j+channel]=Math.min(255,Math.round(buffer[j+channel]*gain));
     buffer[j+3]=Math.round(buffer[j+3]*opacity);

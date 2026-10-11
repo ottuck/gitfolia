@@ -20,9 +20,18 @@ export function normalizeCalendar(raw,{year,asOf,login='',source='github'}={}){
  });
  return {schema:3,year,asOf,login,source,days};
 }
-export function demoCalendar(year=2026,asOf=`${year}-10-10`,kind='mixed'){
- const raw=datesForYear(year).map((date,i)=>{const count=kind==='empty'?0:kind==='full'?18:((i*23+Math.floor(i/7)*11)%19<8?0:1+(i*13)%45);return {date,contributionCount:count,contributionLevel:LEVELS[count===0?0:Math.min(4,Math.ceil(count/12))]};});
+export function demoCalendar(year=2026,asOf=`${year}-12-31`,kind='mixed'){
+ const raw=datesForYear(year).map((date,i)=>{const count=kind==='empty'?0:kind==='full'?60:((i*23+Math.floor(i/7)*11)%19<8?0:1+(i*13)%45);return {date,contributionCount:count,contributionLevel:LEVELS[count===0?0:Math.min(4,Math.ceil(count/12))]};});
  return normalizeCalendar(raw,{year,asOf,source:'demo'});
+}
+export function scenarioCalendar(year=2026,kind='regression'){
+ if(!['regression','year-end','dense'].includes(kind))throw new Error('Unknown test scenario');
+ const anchors={'01-01':1,'01-03':12,'01-04':13,'01-05':25,'01-06':49,'02-01':3,'03-15':20,'04-01':36,'06-30':48,'08-01':7,'09-30':27,'10-01':80,'11-30':36,'12-01':40,'12-24':30,'12-26':40,'12-27':50,'12-28':60,'12-29':70,'12-30':80,'12-31':90};
+ const raw=datesForYear(year).map((date,i)=>{
+  const suffix=date.slice(5),count=kind==='dense'?30+i%61:kind==='year-end'?(suffix>='12-20'&&suffix!=='12-25'?40+(Number(suffix.slice(3))-20)*5:0):(anchors[suffix]||0);
+  return {date,contributionCount:count,contributionLevel:LEVELS[count===0?0:Math.min(4,Math.ceil(count/12))]};
+ });
+ return {...normalizeCalendar(raw,{year,asOf:`${year}-12-31`,source:'demo'}),scenario:kind};
 }
 export function weeksForCalendar(data){
  const weeks=[];for(const day of data.days){const weekday=new Date(day.date+'T00:00:00Z').getUTCDay();if(!weeks.length||weekday===0)weeks.push({index:weeks.length,days:[]});weeks.at(-1).days.push(day);}

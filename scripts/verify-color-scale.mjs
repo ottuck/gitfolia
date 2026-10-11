@@ -12,11 +12,11 @@ export async function verifyColorScale(){
   const luminance=rgb=>rgb[0]*.2126+rgb[1]*.7152+rgb[2]*.0722;
   const variants=[];
   for(let variant=0;variant<8;variant++){
-   const images=await Promise.all([1,2,3,4].map(async level=>{
+   const images=await Promise.all([0,1,2,3,4].map(async level=>{
     const png=Buffer.from(sprites.tiles[`${variant}-${level}`].uri.split(',')[1],'base64');
     return sharp(png).ensureAlpha().raw().toBuffer({resolveWithObject:true});
    }));
-   const mask=images[3].data,contrasts=images.map(({data,info})=>{
+   const mask=images[4].data,contrasts=images.map(({data,info})=>{
     assert.equal(data.length,mask.length);assert.equal(info.channels,4);
     let total=0,pixels=0;
     for(let j=0;j<data.length;j+=4){

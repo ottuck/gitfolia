@@ -15,21 +15,24 @@ for(const [theme,palette]of Object.entries(THEMES)){
 const total=data.days.reduce((s,d)=>s+(d.count||0),0),active=data.days.filter(d=>d.count>0).length;
 fs.writeFileSync(path.join(out,'calendar-state.json'),JSON.stringify({schema:3,source:data.source,login:data.login,year,asOf:data.asOf,totalContributions:total,activeDays:active,images:results},null,2)+'\n');
 const version=r=>r.filename+'?v='+r.sha256.slice(0,12);
+const display=results.find(r=>r.theme==='watercolor');
 fs.writeFileSync(path.join(root,'README.md'),`# Botanical calendar
 
-하루에 잎 하나. GitHub의 기여 기록을 수채화 양치식물, 동판화 허바리움, 미드나이트 식물 도감으로 표현합니다. **비공개 개발 중**입니다.
+하루에 잎 하나. 이 README에는 **수채화 양치식물 한 장**으로 실제 GitHub 기여 기록을 전시합니다. **비공개 개발 중**입니다.
 
 **${year}년 · ${data.source==='github'?'@'+data.login+' 실제 GitHub 기여':'데모 데이터'} · ${data.asOf} UTC 기준 · ${total.toLocaleString('en-US')} contributions · ${active} active days**
 
-${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com/${data.login}?tab=overview&from=${year}-01-01&to=${data.asOf}) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json)`:'데모 데이터로 렌더링한 예시입니다.'}
+${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com/${data.login}?tab=overview&from=${year}-01-01&to=${data.asOf}) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json) · [지금 기록 갱신](https://github.com/ottuck/botanical-readme-poc/actions/workflows/calendar.yml)`:'데모 데이터로 렌더링한 예시입니다.'}
 
-<table><tr>${results.map(r=>'<th>'+r.name+'</th>').join('')}</tr><tr>${results.map(r=>'<td><img src="images/'+version(r)+'" width="280" alt="'+r.name+' '+year+' daily contribution calendar" /></td>').join('')}</tr></table>
+<p align="center"><img src="images/${version(display)}" width="480" alt="${display.name} ${year} daily contribution calendar" /></p>
+
+동판화·미드나이트 스타일과 검증 데이터는 로컬 미리보기에서 비교할 수 있습니다. 이 전시는 자동 갱신 후에도 한 장으로 유지됩니다.
 
 ## 날짜와 색
 
 - 연도 전체를 고정합니다. 평년에는 일별 잎 365개, 윤년에는 366개이며 날짜가 바뀌어도 이전 잎의 위치는 같습니다.
 - 일별 잎은 GitHub GraphQL의 contributionLevel(0–4)을 그대로 사용합니다. 커밋뿐 아니라 GitHub가 인정하는 다른 기여도 포함됩니다.
-- 같은 단계에 속하는 날은 기여 수가 달라도 같은 농도로 표시합니다. 채색 잎은 불투명도 24%, 47%, 74%, 100%와 명도 조정을 함께 사용합니다. 밝은 종이에서는 단계가 높을수록 진해지고, 미드나이트에서는 더 밝은 안료로 대비를 높입니다. 원화의 결·색상·잎 배치는 유지합니다.
+- 같은 단계에 속하는 날은 기여 수가 달라도 같은 농도로 표시합니다. 채색 잎은 불투명도 38%, 59%, 80%, 100%와 명도 조정을 함께 사용합니다. 활동 없는 날의 선화를 낮춰, 1단계 활동도 빈 날보다 확실히 드러납니다. 밝은 종이에서는 단계가 높을수록 진해지고, 미드나이트에서는 더 밝은 안료로 대비를 높입니다.
 - 네 큰 줄기를 따라 주별 작은 가지를 배치합니다. 작은 가지의 일별 잎은 날짜순입니다. 큰 요약 잎은 일요일부터 토요일까지의 주 평균입니다.
 - 주 평균은 이미 지난 날짜의 기여 수를 더하고 날짜 수로 나눕니다. 0인 날도 포함하며 미래 날짜는 제외합니다. 연초·연말의 일부 주는 그 연도에 속하는 날만 사용합니다. 요약 색은 최대 주 평균에 대한 네 단계이며 GitHub의 일별 색 공식과 다릅니다.
 - 활동 없는 날은 선화, 미래 날짜는 더 옅은 선화입니다. 줄기와 뿌리는 항상 채색되어 있습니다. 모든 잎이 채워지는 목표 수치는 없습니다.
@@ -38,7 +41,7 @@ ${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com
 
 ## 실행과 미리보기
 
-Actions → **Update botanical calendar** → 계정과 연도를 입력하면 기여 기록, 세 이미지, README가 갱신됩니다. 매일 00:20 UTC에도 갱신됩니다. 현재 기본 계정은 ottuck입니다.
+이 저장소의 코드가 main에 push되면 기여 기록과 전시 이미지를 자동 갱신합니다. 생성된 README·images만 변경한 push는 제외합니다. 다른 저장소에서 새로 기여한 뒤 바로 확인하려면 위의 **지금 기록 갱신** → **Run workflow**를 실행하세요. 매일 00:20 UTC에도 갱신됩니다. 현재 기본 계정은 ottuck입니다.
 
 \`\`\`sh
 npm ci --ignore-scripts
@@ -49,6 +52,8 @@ python -m http.server 8767 --bind 127.0.0.1
 \`\`\`
 
 [로컬 미리보기](http://127.0.0.1:8767/calendar-preview/)에서 세 테마 비교, 날짜별 확인, 윤년 예시, 주 요약 표시, SVG 저장이 가능합니다. 브라우저는 저장된 실제 기록을 읽으며 토큰을 사용하지 않습니다.
+
+기록 선택에서 **검증: 연초부터 연말까지**, **검증: 연말 40~95기여**, **검증: 매일 30~90기여**를 고르면 12월 31일까지의 고정 테스트 데이터로 확인할 수 있습니다. 연말 집중 예시는 12월 25일만 활동 없는 날로 남깁니다. 테스트 데이터는 실제 GitHub 기여 기록에 섞이지 않습니다.
 
 검증은 새 GitHub 응답과 저장된 날짜별 기여 수·단계, SVG의 잎 이미지 참조와 실제 PNG 채색까지 대조합니다. 주간 평균도 독립적으로 계산합니다. Actions는 검증이 통과한 이미지와 images/calendar-validation.json만 반영합니다. 수집 도중 기록이 바뀌어 불일치가 생기면 갱신을 중단하므로 다시 실행하세요.
 
