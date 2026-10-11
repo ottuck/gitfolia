@@ -5,8 +5,8 @@
 <table>
   <tr><th>Still · 정지</th><th>Breeze · 은은한 바람</th></tr>
   <tr>
-    <td><img src="../images/calendar-watercolor.svg" width="320" alt="GitLeaf 정지 버전" /></td>
-    <td><img src="../images/calendar-watercolor-breeze.svg" width="320" alt="GitLeaf 애니메이션 버전" /></td>
+    <td><img src="https://raw.githubusercontent.com/ottuck/gitleaf/main/images/calendar-watercolor.svg" width="320" alt="GitLeaf 정지 버전" /></td>
+    <td><img src="https://raw.githubusercontent.com/ottuck/gitleaf/main/images/calendar-watercolor-breeze.svg" width="320" alt="GitLeaf 애니메이션 버전" /></td>
   </tr>
 </table>
 
