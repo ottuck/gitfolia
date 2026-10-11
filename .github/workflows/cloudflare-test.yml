@@ -1,4 +1,4 @@
-name: Test botanical Cloudflare Worker
+name: Test Commit Bloom Worker
 on:
   push:
     paths:

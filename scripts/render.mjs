@@ -64,7 +64,7 @@ npm run render -- 1000 3000
 기존 PoC의 아래에서 위로 채워지는 자동 마스크를 그대로 사용합니다. 잎별 또는 랜덤 분산 채색은 아직 구현하지 않았습니다. 은행나무 원본의 연필 잎은 완료 상태에도 남습니다. 완성품은 모든 잎의 선화·채색·마스크를 분리한 소재가 필요합니다.
 `;
 fs.writeFileSync(path.join(root,'README.md'),readme);
-const urls=results.map(r=>`https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/${r.name}.svg?v=${r.sha256.slice(0,12)}`);
+const urls=results.map(r=>`https://raw.githubusercontent.com/ottuck/commit-bloom/main/images/${r.name}.svg?v=${r.sha256.slice(0,12)}`);
 const profile=`# 프로필 README 삽입 검증
 
 다른 저장소의 README에 넣을 때 사용하는 **절대 URL**로 같은 이미지를 표시합니다. 시험 상태는 **${commits} / ${goal}커밋**입니다.

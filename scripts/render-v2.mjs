@@ -24,7 +24,7 @@ for(const [name,key,label]of [['ginkgo-complete-v2','01-sketch-bloom','은행나
  results.push({name,key,label,commits,goal,mode,seed,regions:meta.regions.length,complete:r.complete,active:r.active,bytes:Buffer.byteLength(svg),sha256:createHash('sha256').update(svg).digest('hex')});
 }
 fs.writeFileSync(path.join(out,'state.json'),JSON.stringify({schema:2,commits,goal,mode,seed,images:results},null,2)+'\n');
-const imgs=results.map(r=>`images/${r.key}.svg?v=${r.sha256.slice(0,12)}`),urls=results.map(r=>`https://raw.githubusercontent.com/ottuck/botanical-readme-poc/main/images/${r.key}.svg?v=${r.sha256.slice(0,12)}`);
+const imgs=results.map(r=>`images/${r.key}.svg?v=${r.sha256.slice(0,12)}`),urls=results.map(r=>`https://raw.githubusercontent.com/ottuck/commit-bloom/main/images/${r.key}.svg?v=${r.sha256.slice(0,12)}`);
 const ratio=Math.min(100,commits/goal*100).toFixed(1),status=commits>=goal?'모든 잎이 채워졌습니다':`완성까지 ${(goal-commits).toLocaleString('en-US')}커밋`;
 const modeLabel={spread:'여러 지점에서 퍼지기',leaf:'가까운 잎 하나씩',random:'랜덤 분산'}[mode];
 const readme=`# Botanical garden
