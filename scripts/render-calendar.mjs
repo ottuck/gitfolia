@@ -27,7 +27,7 @@ ${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com
 
 <p align="center"><img src="images/${version(display)}" width="480" alt="${display.name} ${year} daily contribution calendar" /></p>
 
-그림 하단의 **Grown from ${total.toLocaleString('en-US')} contributions.**는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
+그림 하단의 “Grown from ${total.toLocaleString('en-US')} contributions.”는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
 
 ## 날짜와 색
 

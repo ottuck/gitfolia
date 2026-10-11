@@ -8,7 +8,7 @@
 
 <p align="center"><img src="images/calendar-watercolor.svg?v=b82ede3a89d3" width="480" alt="수채화 양치식물 2026 daily contribution calendar" /></p>
 
-그림 하단의 **Grown from 1,327 contributions.**는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
+그림 하단의 “Grown from 1,327 contributions.”는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
 
 ## 날짜와 색
 
