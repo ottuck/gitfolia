@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1080" height="406" viewBox="0 0 1080 406" role="img" aria-labelledby="title description">
+  <title id="title">How GitLeaf works</title>
+  <desc id="description">GitHub README requests an image from a Cloudflare Worker, which returns the saved SVG from R2. Cloudflare Cron triggers daily refreshes: the same Worker reads contributions from the GitHub API, saves updated artwork in R2, and tracks gardens and refresh times in D1. The first image request also generates the garden. The README file is not rewritten.</desc>
+  <defs>
+    <marker id="request-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#8c9c90" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></marker>
+    <marker id="refresh-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto"><path d="M1 1 L7 4 L1 7" fill="none" stroke="#b49b72" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"/></marker>
+  </defs>
+  <rect width="1080" height="406" rx="20" fill="#fdfdfb"/>
+  <g fill="none" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5">
+    <path d="M196 201 H365" stroke="#8c9c90" marker-end="url(#request-arrow)"/>
+    <path d="M365 234 H196" stroke="#8c9c90" marker-end="url(#request-arrow)"/>
+    <path d="M575 201 H825" stroke="#8c9c90" marker-end="url(#request-arrow)"/>
+    <path d="M490 254 V334 Q490 348 504 348 H825" stroke="#8c9c90" marker-start="url(#request-arrow)" marker-end="url(#request-arrow)"/>
+    <g stroke="#b49b72" stroke-dasharray="4 5" marker-end="url(#refresh-arrow)">
+      <path d="M470 89 V178"/>
+      <path d="M575 184 H638 Q652 184 652 170 V71 Q652 57 666 57 H825"/>
+      <path d="M575 234 H825"/>
+    </g>
+  </g>
+  <g font-family="Arial,Helvetica,sans-serif" text-anchor="middle">
+    <g fill="#edf5ee" stroke="#c8d8cb" stroke-width="1">
+      <rect x="24" y="178" width="172" height="76" rx="16"/>
+      <rect x="365" y="178" width="210" height="76" rx="16"/>
+      <rect x="825" y="25" width="231" height="64" rx="16"/>
+      <rect x="825" y="178" width="231" height="76" rx="16"/>
+      <rect x="825" y="316" width="231" height="64" rx="16"/>
+    </g>
+    <rect x="365" y="25" width="210" height="64" rx="16" fill="#fbf4e6" stroke="#ddcfb4"/>
+    <g fill="#344c3b" font-size="18" font-weight="600">
+      <text x="110" y="223">GitHub README</text>
+      <text x="470" y="209">Cloudflare Worker</text>
+      <text x="940.5" y="63">GitHub API</text>
+      <text x="940.5" y="209">R2 · Artwork</text>
+      <text x="940.5" y="342">D1 · Garden records</text>
+    </g>
+    <text x="470" y="64" fill="#74603f" font-size="18" font-weight="600">Cloudflare Cron</text>
+    <g fill="#798775" font-size="13">
+      <text x="470" y="231">Serve images · grow gardens</text>
+      <text x="940.5" y="231">Still + animated SVG</text>
+      <text x="940.5" y="362">Users · refresh times</text>
+    </g>
+    <g font-size="14" fill="#536757">
+      <rect x="224" y="189" width="116" height="24" rx="12" fill="#f5f9f5" stroke="#d8e4d9"/>
+      <text x="282" y="206">Image request</text>
+      <rect x="224" y="222" width="116" height="24" rx="12" fill="#f5f9f5" stroke="#d8e4d9"/>
+      <text x="282" y="239">SVG response</text>
+      <rect x="632" y="189" width="136" height="24" rx="12" fill="#f5f9f5" stroke="#d8e4d9"/>
+      <text x="700" y="206">Read saved SVG</text>
+      <rect x="581" y="336" width="214" height="24" rx="12" fill="#f5f9f5" stroke="#d8e4d9"/>
+      <text x="688" y="353">Garden &amp; refresh schedule</text>
+    </g>
+    <g font-size="14" fill="#89714c">
+      <rect x="411" y="121" width="118" height="24" rx="12" fill="#fbf7ef" stroke="#e5d9c4"/>
+      <text x="470" y="138">Daily refresh</text>
+      <rect x="666" y="45" width="152" height="24" rx="12" fill="#fbf7ef" stroke="#e5d9c4"/>
+      <text x="742" y="62">Fetch contributions</text>
+      <rect x="628" y="222" width="144" height="24" rx="12" fill="#fbf7ef" stroke="#e5d9c4"/>
+      <text x="700" y="239">Save updated SVG</text>
+    </g>
+  </g>
+</svg>
