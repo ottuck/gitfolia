@@ -1,4 +1,4 @@
-name: Update Commit Bloom artwork
+name: Update GitFolia artwork
 
 on:
   push:

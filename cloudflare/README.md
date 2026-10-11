@@ -1,4 +1,4 @@
-# Commit Bloom · Cloudflare development
+# GitFolia · Cloudflare development
 
 Worker 한 개가 실제 GitHub 기여 기록을 수채화 식물로 만들어 제공합니다. D1은 사용자와 갱신 상태, R2는 완성된 SVG를 저장합니다. 저장소는 비공개로 유지하며 이미지 주소는 로그인 없이 접근할 수 있습니다.
 
@@ -9,7 +9,7 @@ Worker 한 개가 실제 GitHub 기여 기록을 수채화 식물로 만들어 �
 README에 아래 한 줄을 붙여 넣습니다. `ottuck`을 자신의 GitHub 아이디로 바꾸면 됩니다. 사용자별 GitHub Actions 설정이나 회원가입이 필요하지 않습니다.
 
 ```html
-<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="320" alt="My Commit Bloom garden" /></p>
+<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="320" alt="My GitFolia garden" /></p>
 ```
 
 [실제 그림 보기](https://botanical-garden.ottuck.workers.dev/ottuck)
