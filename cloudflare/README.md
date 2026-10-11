@@ -74,7 +74,7 @@ npx wrangler secret put GITHUB_TOKEN
 
 GitHub 토큰은 Cloudflare의 Worker secret으로 저장하며 URL, 저장소 파일, 클라이언트에 넣지 않습니다. 인증된 GitHub CLI 로그인을 명시적으로 사용하려면 `npm run secret:github -- --from-gh`을 실행할 수도 있습니다. 이 명령은 토큰을 명령행 인수나 파일로 쓰지 않고 표준 입력으로 전달합니다. 운영용 전용 토큰으로 바꾸려면 `wrangler secret put GITHUB_TOKEN`을 다시 실행합니다.
 
-GitHub의 `cloudflare-test.yml`은 코드 테스트만 실행하며 자동으로 배포하거나 토큰을 사용하지 않습니다. 서버를 업데이트하려면 테스트 후 `npm run deploy`를 실행합니다. 기존 저장소 이미지용 `calendar.yml`은 별개로 유지하며 `images/`만 갱신합니다. 서비스 소개용 루트 README와 프로필 삽입 안내는 자동 생성하지 않습니다.
+GitHub의 `cloudflare-test.yml`은 코드 테스트만 실행하며 자동으로 배포하거나 토큰을 사용하지 않습니다. 서버를 업데이트하려면 테스트 후 `npm run deploy`를 실행합니다. 예전 PoC의 일일 이미지 생성·커밋용 `calendar.yml`과 수동 실험·커밋용 `render.yml`은 제거했습니다. 서비스 그림은 Cloudflare Cron으로 갱신되며 README 문서를 수정하거나 Git 커밋을 생성하지 않습니다. `images/`의 기존 SVG·데이터는 개발용 스냅샷으로 남겨두며 자동 갱신하지 않습니다. 필요할 때 저장소 루트에서 `npm run render -- ottuck 2026 github`로 직접 생성할 수 있습니다.
 
 ## 검증
 
