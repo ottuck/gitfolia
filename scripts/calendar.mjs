@@ -100,9 +100,9 @@ export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=
    const groups=frond.weeks.map(week=>{
     const leaves=model.leaves.filter(leaf=>leaf.week===week.index).map(leaf=>leafTag(leaf,'day')).join('');
     const summary=weekly?leafTag(model.summaries[week.index],'week'):'';
-    return `<g class="breeze-branch" data-motion-week="${week.index}" style="transform-origin:${week.base.x.toFixed(2)}px ${week.base.y.toFixed(2)}px;--sway:${(.5+.25*jitter(week.index)).toFixed(2)}deg;animation-duration:${(8+4*jitter(week.index+90)).toFixed(2)}s;animation-delay:-${(12*jitter(week.index+180)).toFixed(2)}s">${stroke([week.path],1.1)}${leaves}${summary}</g>`;
+    return `<g class="breeze-branch" data-motion-week="${week.index}" style="transform-origin:${week.base.x.toFixed(2)}px ${week.base.y.toFixed(2)}px;--sway:${(.8+.4*jitter(week.index)).toFixed(2)}deg;animation-duration:${(8+4*jitter(week.index+90)).toFixed(2)}s;animation-delay:-${(12*jitter(week.index+180)).toFixed(2)}s">${stroke([week.path],1.1)}${leaves}${summary}</g>`;
    }).join('');
-   return `<g class="breeze-frond" data-motion-frond="${frond.index}" style="transform-origin:${frond.base.x}px ${frond.base.y}px;--sway:${[.23,.19,.22,.25][frond.index]}deg;animation-duration:${[10,11.7,12.8,10.9][frond.index]}s;animation-delay:-${[0,3,6,1.5][frond.index]}s">${stroke([model.stems[frond.index]],3.3)}${groups}</g>`;
+   return `<g class="breeze-frond" data-motion-frond="${frond.index}" style="transform-origin:${frond.base.x}px ${frond.base.y}px;--sway:${[.8,.65,.75,.85][frond.index]}deg;animation-duration:${[10,11.7,12.8,10.9][frond.index]}s;animation-delay:-${[0,3,6,1.5][frond.index]}s">${stroke([model.stems[frond.index]],3.3)}${groups}</g>`;
   }).join('');
   plant=`<g stroke-linecap="round" stroke-linejoin="round">${roots}${moving}</g>`;
  }

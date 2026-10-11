@@ -1,0 +1,25 @@
+// Inputs have already passed the GitHub login and year validation in parseGarden.
+export function previewResponse(login: string, year: number, head = false) {
+  const still = `/${login}${year ? '?year=' + year : ''}`;
+  const breeze = `${still}${year ? '&amp;' : '?'}motion=breeze`;
+  const html = `<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>GitLeaf · A little breeze</title>
+<style>*{box-sizing:border-box}body{margin:0;background:#faf9f4;color:#4e594a;font-family:system-ui,-apple-system,sans-serif}main{max-width:940px;margin:auto;padding:42px 24px 48px}header{display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid #deded2;padding-bottom:18px}.brand{font-family:Georgia,serif;font-size:26px;color:inherit;text-decoration:none}.eyebrow{font-size:11px;letter-spacing:2px;color:#818571}h1{font-family:Georgia,serif;font-weight:400;font-size:36px;margin:34px 0 12px}p{font-size:14px;line-height:1.8;color:#7b806e}.gallery{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:32px;margin-top:30px}figure{margin:0}figcaption{display:flex;align-items:baseline;gap:10px;margin-bottom:14px}figcaption strong{font-weight:500;font-size:16px}figcaption span{font-family:Georgia,serif;font-style:italic;color:#92977f}img{display:block;width:100%;max-width:360px;height:auto;margin:auto;border:1px solid #e8e3d5}figure a{display:block;text-align:center;color:inherit;font-size:12px;margin-top:14px;text-underline-offset:4px}footer{border-top:1px solid #deded2;margin-top:30px;padding-top:16px;font-size:12px;line-height:1.8;color:#858976}@media(max-width:620px){main{padding:26px 18px}.gallery{grid-template-columns:1fr;gap:30px}h1{font-size:30px}}</style></head>
+<body><main>
+<header><a class="brand" href="https://github.com/ottuck/gitleaf">GitLeaf</a><span class="eyebrow">YOUR YEAR, IN LEAVES</span></header>
+<h1>A little breeze.</h1>
+<p>@${login}의 실제 GitHub 기록. 같은 잎과 색에 작은 바람만 더했습니다.<br/>오른쪽 그림의 가지 끝을 몇 초 동안 바라보세요.</p>
+<section class="gallery" aria-label="정지 그림과 애니메이션 비교">
+<figure><figcaption><strong>정지 그림</strong><span>Still</span></figcaption><img src="${still}" alt="GitLeaf 정지 그림" width="360" height="540"/><a href="${still}" target="_blank" rel="noopener">SVG 크게 보기 ↗</a></figure>
+<figure><figcaption><strong>은은한 바람</strong><span>Breeze</span></figcaption><picture><source media="(prefers-reduced-motion: reduce)" srcset="${still}"/><img src="${breeze}" alt="GitLeaf 가지와 잎이 천천히 흔들리는 그림" width="360" height="540"/></picture><a href="${breeze}" target="_blank" rel="noopener">움직이는 SVG 크게 보기 ↗</a></figure>
+</section>
+<footer>뿌리·종이·글씨는 고정. 가지마다 8–13초 주기로 다르게 흔들립니다.<br/>기기의 움직임 줄이기가 켜져 있으면 정지 그림으로 표시됩니다. 기존 기본 이미지 주소는 정지 버전을 제공합니다.</footer>
+</main></body></html>`;
+  return new Response(head ? null : html, { headers: {
+    'Content-Type': 'text/html; charset=utf-8',
+    'Cache-Control': 'public, max-age=300',
+    'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; img-src 'self' data:; style-src 'unsafe-inline'; base-uri 'none'; frame-ancestors 'none'"
+  } });
+}

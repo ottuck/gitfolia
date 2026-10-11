@@ -310,3 +310,73 @@ test('a missing R2 object can be regenerated without waiting for the next daily 
   assert.equal(await response.text(), original);
   assert.equal(h.state.calls.length, 2);
 });
+
+test('breeze and still share one GitHub snapshot, registration and refresh; standalone leaves are permitted', async t => {
+  const h = await harness(t);
+  const motion = await h.get('/ottuck?year=2024&motion=breeze');
+  const breeze = await motion.text();
+  assert.equal(motion.status, 200);
+  assert.equal(motion.headers.get('X-Garden-Motion'), 'breeze');
+  assert.match(motion.headers.get('Content-Security-Policy'), /img-src data:/);
+  assert.match(breeze, /@keyframes leaf-breeze/);
+  checkLeaves(breeze, h.state.calls[0], 'regression');
+  const still = await h.get('/ottuck?year=2024');
+  const staticSvg = await still.text();
+  assert(!staticSvg.includes('@keyframes'));
+  assert.equal(still.headers.get('X-Garden-Motion'), 'none');
+  assert.equal(still.headers.get('X-Garden-Updated-At'), motion.headers.get('X-Garden-Updated-At'));
+  const dayGroups = svg => [...svg.matchAll(/<g data-kind="day"[^>]*>.*?<\/g>/g)].map(m => m[0]);
+  assert.deepEqual(dayGroups(breeze), dayGroups(staticSvg));
+  assert.equal(h.state.calls.length, 1);
+  assert.equal((await h.db.prepare('SELECT COUNT(*) AS count FROM gardens').first()).count, 1);
+  const legacy = await h.get('/garden/ottuck.svg?year=2024&motion=breeze');
+  assert.equal(await legacy.text(), breeze);
+  const head = await h.get('/ottuck?year=2024&motion=breeze', { method: 'HEAD' });
+  assert.equal(await head.text(), '');
+  assert.equal(head.headers.get('ETag'), motion.headers.get('ETag'));
+  const conditional = await h.get('/ottuck?year=2024&motion=breeze', {
+    headers: { 'If-None-Match': motion.headers.get('ETag') }
+  });
+  assert.equal(conditional.status, 304);
+  await conditional.text();
+  h.state.mode = 'changed';
+  await h.cron(Date.now() + 2 * DAY);
+  const refreshed = await (await h.get('/ottuck?year=2024&motion=breeze')).text();
+  checkLeaves(refreshed, h.state.calls[1], 'changed');
+  assert.deepEqual(dayGroups(refreshed), dayGroups(await (await h.get('/ottuck?year=2024')).text()));
+  assert.equal(h.state.calls.length, 2);
+});
+
+test('an existing static garden gains a missing breeze image without duplicate registration', async t => {
+  const h = await harness(t);
+  await (await h.get('/ottuck?year=2024')).text();
+  await h.bucket.delete('ottuck/2024.breeze.svg');
+  const response = await h.get('/ottuck?year=2024&motion=breeze');
+  assert.equal(response.status, 200);
+  checkLeaves(await response.text(), h.state.calls[1], 'regression');
+  assert.equal(h.state.calls.length, 2);
+  assert.equal((await h.db.prepare('SELECT COUNT(*) AS count FROM gardens').first()).count, 1);
+});
+
+test('hosted comparison has working same-origin images and direct SVG links without GitHub raw', async t => {
+  const h = await harness(t);
+  const response = await h.get('/preview/OtTuCk?year=2024');
+  assert.equal(response.status, 200);
+  assert.match(response.headers.get('Content-Type'), /^text\/html/);
+  const html = await response.text();
+  assert(html.includes('src="/ottuck?year=2024"'));
+  assert(html.includes('src="/ottuck?year=2024&amp;motion=breeze"'));
+  assert(html.includes('href="/ottuck?year=2024&amp;motion=breeze"'));
+  assert(html.includes('<source media="(prefers-reduced-motion: reduce)"'));
+  assert(!html.includes('raw.githubusercontent.com'));
+  assert(!html.includes('<script'));
+  assert.equal(h.state.calls.length, 0);
+  assert.equal(await (await h.get('/preview/ottuck', { method: 'HEAD' })).text(), '');
+  for (const path of ['/ottuck?motion=fast', '/ottuck?motion=', '/ottuck?motion=breeze&motion=none',
+    '/preview/%3Cscript%3E', '/preview/ottuck?year=2100']) {
+    const invalid = await h.get(path);
+    assert.equal(invalid.status, 400, path);
+    await invalid.text();
+  }
+  assert.equal(h.state.calls.length, 0);
+});

@@ -1,6 +1,7 @@
 import { calendarSvg } from '../../scripts/calendar.mjs';
 import sprites from '../../artwork/calendar/watercolor-sprites.json';
 import { fetchGitHubCalendar, GardenError } from './github';
+import { previewResponse } from './preview';
 
 export interface Env {
   DB: D1Database;
@@ -42,8 +43,11 @@ function parseGarden(url: URL, now: number) {
     throw new GardenError('invalid_login', 400);
   }
   for (const key of url.searchParams.keys()) {
-    if (key !== 'year') throw new GardenError('unknown_option', 400);
+    if (key !== 'year' && key !== 'motion') throw new GardenError('unknown_option', 400);
   }
+  const motion = url.searchParams.get('motion') || 'none';
+  if (url.searchParams.getAll('motion').length > 1 || !['none', 'breeze'].includes(motion)
+    || url.searchParams.get('motion') === '') throw new GardenError('invalid_motion', 400);
   if (url.searchParams.getAll('year').length > 1) throw new GardenError('invalid_year', 400);
   const value = url.searchParams.get('year');
   const requested_year = value === null ? 0 : /^\d{4}$/.test(value) ? Number(value) : -1;
@@ -51,8 +55,9 @@ function parseGarden(url: URL, now: number) {
   if (value !== null && (requested_year < 2008 || requested_year > currentYear)) {
     throw new GardenError('invalid_year', 400);
   }
-  return { login, requested_year,
-    garden_key: `${login}/${requested_year || 'current'}.svg` };
+  const garden_key = `${login}/${requested_year || 'current'}.svg`;
+  return { login, requested_year, motion, garden_key,
+    image_key: motion === 'breeze' ? garden_key.replace(/\.svg$/, '.breeze.svg') : garden_key };
 }
 
 function errorResponse(error: unknown, head = false) {
@@ -66,6 +71,7 @@ function errorResponse(error: unknown, head = false) {
     'Content-Type': 'image/svg+xml; charset=utf-8',
     'Cache-Control': 'no-store',
     'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; img-src data:; style-src 'unsafe-inline'",
     'X-Garden-Error': known.code,
     ...(known.status === 503 ? { 'Retry-After': '60' } : {})
   } });
@@ -77,9 +83,11 @@ function imageResponse(object: R2Object | R2ObjectBody, request: Request) {
     'Cache-Control': CACHE,
     'ETag': object.httpEtag,
     'X-Content-Type-Options': 'nosniff',
+    'Content-Security-Policy': "default-src 'none'; img-src data:; style-src 'unsafe-inline'",
     'X-Garden-Updated-At': object.customMetadata?.updatedAt || object.uploaded.toISOString(),
     'X-Garden-As-Of': object.customMetadata?.asOf || '',
-    'X-Garden-Year': object.customMetadata?.year || ''
+    'X-Garden-Year': object.customMetadata?.year || '',
+    'X-Garden-Motion': object.customMetadata?.motion || 'none'
   });
   const condition = request.headers.get('If-None-Match');
   if (condition?.split(',').some(tag => tag.trim() === '*' || tag.trim().replace(/^W\//, '') === object.httpEtag)) {
@@ -101,14 +109,17 @@ async function refreshGarden(env: Env, garden: Pick<Garden, 'garden_key' | 'logi
   try {
     const year = garden.requested_year || new Date(now).getUTCFullYear();
     const data = await fetchGitHubCalendar(garden.login, year, env.GITHUB_TOKEN, now);
-    const svg = calendarSvg(data, { theme: 'watercolor', sprites });
-    await env.GARDENS.put(garden.garden_key, svg, {
-      httpMetadata: { contentType: 'image/svg+xml; charset=utf-8', cacheControl: CACHE },
-      customMetadata: {
-        updatedAt: new Date(now).toISOString(), asOf: data.asOf, year: String(year),
-        contributions: String(data.days.reduce((sum, day) => sum + (day.count || 0), 0))
-      }
-    });
+    for (const motion of ['none', 'breeze'] as const) {
+      const svg = calendarSvg(data, { theme: 'watercolor', sprites, motion });
+      const key = motion === 'breeze' ? garden.garden_key.replace(/\.svg$/, '.breeze.svg') : garden.garden_key;
+      await env.GARDENS.put(key, svg, {
+        httpMetadata: { contentType: 'image/svg+xml; charset=utf-8', cacheControl: CACHE },
+        customMetadata: {
+          updatedAt: new Date(now).toISOString(), asOf: data.asOf, year: String(year),
+          contributions: String(data.days.reduce((sum, day) => sum + (day.count || 0), 0)), motion
+        }
+      });
+    }
     await env.DB.prepare(`UPDATE gardens SET updated_at = ?, next_refresh_at = ?,
       lock_until = 0, lock_token = NULL, failure_count = 0, last_error = NULL
       WHERE garden_key = ? AND lock_token = ?`)
@@ -132,7 +143,7 @@ async function serveGarden(request: Request, env: Env, now: number) {
   const garden = parseGarden(url, now);
   if (!garden) return new Response('Not found', { status: 404 });
   let image = request.method === 'HEAD'
-    ? await env.GARDENS.head(garden.garden_key) : await env.GARDENS.get(garden.garden_key);
+    ? await env.GARDENS.head(garden.image_key) : await env.GARDENS.get(garden.image_key);
   if (image) return imageResponse(image, request);
   if (!env.GITHUB_TOKEN) throw new GardenError('github_token_missing');
   await env.DB.prepare(`INSERT INTO gardens
@@ -147,7 +158,7 @@ async function serveGarden(request: Request, env: Env, now: number) {
   }
   await refreshGarden(env, garden, now, true);
   image = request.method === 'HEAD'
-    ? await env.GARDENS.head(garden.garden_key) : await env.GARDENS.get(garden.garden_key);
+    ? await env.GARDENS.head(garden.image_key) : await env.GARDENS.get(garden.image_key);
   if (!image) throw new GardenError('garden_generating');
   return imageResponse(image, request);
 }
@@ -182,7 +193,17 @@ export default {
         headers: { 'Cache-Control': 'no-store' }
       });
     }
-    try { return await serveGarden(request, env, Date.now()); }
+    try {
+      const preview = /^\/preview\/([^/]+)\/?$/.exec(url.pathname);
+      if (preview) {
+        const imageUrl = new URL(url);
+        imageUrl.pathname = '/' + preview[1];
+        const garden = parseGarden(imageUrl, Date.now());
+        if (!garden) return new Response('Not found', { status: 404 });
+        return previewResponse(garden.login, garden.requested_year, request.method === 'HEAD');
+      }
+      return await serveGarden(request, env, Date.now());
+    }
     catch (error) {
       console.error(JSON.stringify({ event: 'garden_request_failed',
         code: error instanceof GardenError ? error.code : 'garden_unavailable' }));
