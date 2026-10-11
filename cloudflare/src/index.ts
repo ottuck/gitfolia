@@ -31,7 +31,9 @@ function nextRefresh(now: number) {
 }
 
 function parseGarden(url: URL, now: number) {
-  const match = /^\/garden\/([^/]+)\.svg$/.exec(url.pathname);
+  // Both public URLs use the same storage key and daily refresh registration.
+  const match = /^\/garden\/([^/]+)\.svg$/.exec(url.pathname)
+    || /^\/([^/]+)\/?$/.exec(url.pathname);
   if (!match) return null;
   let login;
   try { login = decodeURIComponent(match[1]).toLowerCase(); }

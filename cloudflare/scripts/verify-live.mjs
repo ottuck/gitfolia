@@ -8,7 +8,7 @@ const [base, login = 'ottuck', outputArg = 'test-output/live'] = process.argv.sl
 if (!base) throw new Error('Usage: npm run verify:live -- https://YOUR-WORKER.workers.dev [login] [output-directory]');
 if (!/^[a-z\d](?:[a-z\d]|-(?=[a-z\d])){0,38}$/i.test(login)) throw new Error('Invalid login');
 const output = path.resolve(outputArg);
-const url = new URL(`/garden/${login}.svg`, base);
+const url = new URL(`/${login}`, base);
 const start = performance.now();
 const response = await fetch(url, { signal: AbortSignal.timeout(30_000) });
 assert.equal(response.status, 200, 'Worker must return the real image');

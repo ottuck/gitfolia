@@ -135,6 +135,30 @@ test('stored SVG, HEAD and conditional requests reuse the image without another 
   assert.equal(h.state.calls.length, 1);
 });
 
+test('extensionless URLs create and share the legacy image, registration, HEAD and ETag cache', async t => {
+  const h = await harness(t);
+  for (const query of ['', '?year=2024']) {
+    const short = await h.get('/OtTuCk' + query);
+    assert.equal(short.status, 200);
+    assert.equal(short.headers.get('Content-Type'), 'image/svg+xml; charset=utf-8');
+    const svg = await short.text(), etag = short.headers.get('ETag');
+    const legacy = await h.get('/garden/ottuck.svg' + query);
+    assert.equal(legacy.status, 200);
+    assert.equal(await legacy.text(), svg);
+    assert.equal(legacy.headers.get('ETag'), etag);
+    assert.equal(await (await h.get('/ottuck/' + query)).text(), svg);
+    const head = await h.get('/ottuck' + query, { method: 'HEAD' });
+    assert.equal(head.status, 200);
+    assert.equal(await head.text(), '');
+    assert.equal(head.headers.get('ETag'), etag);
+    const unchanged = await h.get('/ottuck' + query, { headers: { 'If-None-Match': etag } });
+    assert.equal(unchanged.status, 304);
+    await unchanged.text();
+  }
+  assert.equal(h.state.calls.length, 2, 'one generation per distinct year, shared across URL formats');
+  assert.equal((await h.db.prepare('SELECT COUNT(*) AS count FROM gardens').first()).count, 2);
+});
+
 test('scheduled update changes old leaves and total while retaining the same URL; no duplicate daily update', async t => {
   const h = await harness(t);
   const before = await (await h.get('/garden/ottuck.svg?year=2024')).text();
@@ -240,14 +264,16 @@ test('invalid users, invalid/future years, unknown options and write methods are
   const h = await harness(t);
   for (const path of ['/garden/-bad.svg', '/garden/bad--user.svg', '/garden/%3Cscript%3E.svg',
     '/garden/ottuck.svg?year=2100', '/garden/ottuck.svg?year=abc', '/garden/ottuck.svg?year=0000', '/garden/ottuck.svg?year=2007',
-    '/garden/ottuck.svg?year=2024&year=2025', '/garden/ottuck.svg?token=unsafe']) {
+    '/garden/ottuck.svg?year=2024&year=2025', '/garden/ottuck.svg?token=unsafe',
+    '/-bad', '/bad--user', '/%3Cscript%3E', '/ottuck?year=0000', '/ottuck?year=2100',
+    '/ottuck?year=2024&year=2025', '/ottuck?token=unsafe']) {
     const response = await h.get(path);
     assert.equal(response.status, 400, path);
     assert.equal(response.headers.get('Cache-Control'), 'no-store');
     await response.text();
   }
   assert.equal((await h.get('/garden/ottuck.svg', { method: 'POST' })).status, 405);
-  assert.equal((await h.get('/unknown')).status, 404);
+  assert.equal((await h.get('/unknown/path')).status, 404);
   assert.equal(h.state.calls.length, 0);
   assert.equal((await h.db.prepare('SELECT COUNT(*) AS count FROM gardens').first()).count, 0);
 });

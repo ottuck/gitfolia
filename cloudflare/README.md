@@ -9,12 +9,14 @@ Worker 한 개가 실제 GitHub 기여 기록을 수채화 식물로 만들어 �
 README에 아래 한 줄을 붙여 넣습니다. `ottuck`을 자신의 GitHub 아이디로 바꾸면 됩니다. 사용자별 GitHub Actions 설정이나 회원가입이 필요하지 않습니다.
 
 ```html
-<img src="https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg" width="480" alt="My GitHub botanical garden" />
+<img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="480" alt="My GitHub botanical garden" />
 ```
 
-[실제 그림 보기](https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg)
+[실제 그림 보기](https://botanical-garden.ottuck.workers.dev/ottuck)
 
-<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg" width="480" alt="ottuck의 실제 GitHub 기여로 그린 수채화 식물" /></p>
+<p align="center"><img src="https://botanical-garden.ottuck.workers.dev/ottuck" width="480" alt="ottuck의 실제 GitHub 기여로 그린 수채화 식물" /></p>
+
+Cloudflare가 제공하는 `workers.dev` 주소를 사용하므로 별도 도메인 구매가 필요하지 않습니다. `/사용자명` 주소는 확장자 없이 SVG 이미지를 반환합니다. 기존 `/garden/사용자명.svg` 주소도 같은 그림과 갱신 상태를 사용하므로 이미 붙인 코드를 바꿀 필요는 없습니다.
 
 - 기본값은 현재 UTC 연도입니다. 같은 주소가 새해에는 새 연도의 그림을 제공합니다.
 - `?year=2024`처럼 연도를 고정할 수 있습니다. 2008년부터 현재 연도까지 지원합니다.
@@ -42,7 +44,7 @@ npm run db:local
 
 로컬용 `cloudflare/.dev.vars` 파일에 `GITHUB_TOKEN="..."`을 설정한 뒤 `npm run dev`를 실행합니다. 이 파일은 Git에서 제외됩니다. 실제 서비스 토큰과 별도로 읽기 목적의 GitHub 토큰을 사용할 수 있습니다.
 
-- 이미지: `http://localhost:8787/garden/ottuck.svg`
+- 이미지: `http://localhost:8787/ottuck`
 - 상태: `http://localhost:8787/health` (프로그램 응답 확인이며 저장소·GitHub API의 정상 동작을 보장하는 검사는 아닙니다)
 - 예약 실행 테스트: `http://localhost:8787/__scheduled?cron=*/10%20*%20*%20*%20*` (로컬 개발 전용)
 
@@ -78,7 +80,7 @@ npm test
 npm run verify:live -- https://botanical-garden.ottuck.workers.dev ottuck
 ```
 
-16개의 테스트가 workerd, D1, R2에서 최초 생성·재사용·365/366일 채색·연말 집중 활동·과거 잎 갱신·일일 중복 방지·장애 복구·불완전 기록·동시 실행·배치·연도 변경·잘못된 URL·누락된 secret·리다이렉트 차단·저장 이미지 유실 복구를 확인합니다. 테스트는 GitHub 네트워크에 접속하지 않습니다.
+17개의 테스트가 workerd, D1, R2에서 최초 생성·재사용·확장자 없는 주소와 기존 주소의 이미지·등록·캐시 공유·365/366일 채색·연말 집중 활동·과거 잎 갱신·일일 중복 방지·장애 복구·불완전 기록·동시 실행·배치·연도 변경·잘못된 URL·누락된 secret·리다이렉트 차단·저장 이미지 유실 복구를 확인합니다. 테스트는 GitHub 네트워크에 접속하지 않습니다.
 
 `verify:live`는 배포한 서비스에서 받은 그림을 별도의 새 GitHub 응답과 대조합니다. 일별 기여 수, 단계, 실제 잎 PNG, 미래 날짜, 주간 평균과 그림 하단 합계까지 확인하고 `test-output/live/`에 SVG와 검증 보고서를 저장합니다. 검증 도중 실제 기록이 바뀌거나 검증 계정의 조회 권한이 서비스와 다르면 불일치로 실패할 수 있습니다.
 
