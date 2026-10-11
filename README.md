@@ -25,6 +25,24 @@ Prefer a still portrait? Remove `?motion=breeze`.
 
 ## How it works
 
+```mermaid
+flowchart LR
+    readme("GitHub README") -->|Image request| worker("Cloudflare Worker")
+    worker -->|SVG response| readme
+    worker -->|Read saved SVG| artwork("R2 · SVG artwork")
+    cron("Cloudflare Cron") -.->|Daily refresh| worker
+    worker -.->|Fetch contributions| github("GitHub API")
+    worker -.->|Save updated SVG| artwork
+    worker <-->|Garden & refresh schedule| schedule("D1 · Garden records")
+
+    classDef garden fill:#edf5ee,stroke:#c4d4c7,color:#344c3b
+    classDef refresh fill:#fbf4e6,stroke:#ddcfb4,color:#74603f
+    class readme,worker,artwork,github,schedule garden
+    class cron refresh
+```
+
+Solid arrows show image requests and storage access. Dashed arrows show the daily refresh. A garden's first request also fetches GitHub activity and creates its artwork.
+
 | Step | What happens | Powered by |
 | :--- | :--- | :--- |
 | **01 · Request** | Your README requests the garden at your image URL. | Cloudflare Worker |
