@@ -10,6 +10,10 @@ export function datesForYear(year){
  if(!Number.isInteger(year)||year<2000||year>2100)throw new Error('Year must be 2000–2100');
  const dates=[];for(let d=new Date(Date.UTC(year,0,1));d.getUTCFullYear()===year;d.setUTCDate(d.getUTCDate()+1))dates.push(`${year}-${pad(d.getUTCMonth()+1)}-${pad(d.getUTCDate())}`);return dates;
 }
+/**
+ * @param {Array<{date:string,contributionCount:number,contributionLevel:string}>} raw
+ * @param {{year:number,asOf:string,login?:string,source?:string}} options
+ */
 export function normalizeCalendar(raw,{year,asOf,login='',source='github'}={}){
  const dates=datesForYear(year);if(!/^\d{4}-\d{2}-\d{2}$/.test(asOf)||Number.isNaN(Date.parse(asOf+'T00:00:00Z')))throw new Error('Invalid asOf date');
  const byDate=new Map();for(const day of raw){if(byDate.has(day.date))throw new Error('Duplicate date: '+day.date);byDate.set(day.date,day);}
@@ -62,6 +66,10 @@ export function plantLayout(data){
  return {width:1024,height:1536,leaves,summaries,branches,stems};
 }
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&apos;'}[c]));
+/**
+ * @param {ReturnType<typeof normalizeCalendar>} data
+ * @param {{theme?:string,sprites:{theme:string,tiles:Record<string,{width:number,height:number,uri:string}>},weekly?:boolean,labels?:boolean}} options
+ */
 export function calendarSvg(data,{theme='watercolor',sprites,weekly=true,labels=true}={}){
  const palette=THEMES[theme];if(!palette||!sprites||sprites.theme!==theme)throw new Error('Missing or mismatched theme sprites');
  const model=plantLayout(data),used=new Map(),active=data.days.filter(d=>!d.future&&d.count>0).length,total=data.days.reduce((n,d)=>n+(d.count||0),0);

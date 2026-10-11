@@ -2,6 +2,8 @@
 
 하루에 잎 하나. 이 README에는 **수채화 양치식물 한 장**으로 실제 GitHub 기여 기록을 전시합니다. **비공개 개발 중**입니다.
 
+[Cloudflare 이미지 서비스 사용·배포 안내](cloudflare/README.md) · [서버에서 제공하는 실제 그림](https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg)
+
 **2026년 · @ottuck 실제 GitHub 기여 · 2026-10-11 UTC 기준 · 1,328 contributions · 74 active days**
 
 [GitHub 기여 달력에서 확인](https://github.com/ottuck?tab=overview&from=2026-01-01&to=2026-10-11) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json) · [지금 기록 갱신](https://github.com/ottuck/botanical-readme-poc/actions/workflows/calendar.yml)

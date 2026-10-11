@@ -21,6 +21,8 @@ fs.writeFileSync(path.join(root,'README.md'),`# Botanical calendar
 
 하루에 잎 하나. 이 README에는 **수채화 양치식물 한 장**으로 실제 GitHub 기여 기록을 전시합니다. **비공개 개발 중**입니다.
 
+[Cloudflare 이미지 서비스 사용·배포 안내](cloudflare/README.md) · [서버에서 제공하는 실제 그림](https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg)
+
 **${year}년 · ${data.source==='github'?'@'+data.login+' 실제 GitHub 기여':'데모 데이터'} · ${data.asOf} UTC 기준 · ${total.toLocaleString('en-US')} contributions · ${active} active days**
 
 ${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com/${data.login}?tab=overview&from=${year}-01-01&to=${data.asOf}) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json) · [지금 기록 갱신](https://github.com/ottuck/botanical-readme-poc/actions/workflows/calendar.yml)`:'데모 데이터로 렌더링한 예시입니다.'}
