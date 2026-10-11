@@ -4,13 +4,13 @@
 
 [Cloudflare 이미지 서비스 사용·배포 안내](cloudflare/README.md) · [서버에서 제공하는 실제 그림](https://botanical-garden.ottuck.workers.dev/garden/ottuck.svg)
 
-**2026년 · @ottuck 실제 GitHub 기여 · 2026-10-11 UTC 기준 · 1,328 contributions · 74 active days**
+**2026년 · @ottuck 실제 GitHub 기여 · 2026-10-11 UTC 기준 · 1,333 contributions · 74 active days**
 
 [GitHub 기여 달력에서 확인](https://github.com/ottuck?tab=overview&from=2026-01-01&to=2026-10-11) · [날짜별 기록](images/calendar-data.json) · [기록과 채색 대조 결과](images/calendar-validation.json) · [지금 기록 갱신](https://github.com/ottuck/botanical-readme-poc/actions/workflows/calendar.yml)
 
-<p align="center"><img src="images/calendar-watercolor.svg?v=0f0c34764362" width="480" alt="수채화 양치식물 2026 daily contribution calendar" /></p>
+<p align="center"><img src="images/calendar-watercolor.svg?v=59eb15773f16" width="480" alt="수채화 양치식물 2026 daily contribution calendar" /></p>
 
-그림 하단의 “Grown from 1,328 contributions.”는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
+그림 하단의 “Grown from 1,333 contributions.”는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
 
 ## 날짜와 색
 
