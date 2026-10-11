@@ -42,7 +42,7 @@ jobs:
           package-manager-cache: false
       - run: npm ci --ignore-scripts
       - run: npm run verify
-      - name: Collect GitHub contributions and render three themes
+      - name: Collect GitHub contributions and render the watercolor plant
         env:
           GH_TOKEN: ${{ secrets.BOTANICAL_TOKEN || github.token }}
           CALENDAR_LOGIN: ${{ inputs.login || 'ottuck' }}

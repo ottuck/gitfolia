@@ -1,5 +1,5 @@
-import {THEMES,calendarSvg,demoCalendar,scenarioCalendar,weeksForCalendar} from '../scripts/calendar.mjs';
-const $=id=>document.getElementById(id),sprites={},svgStrings={},themes=Object.keys(THEMES);let snapshot,data;
+import {THEMES,PUBLISHED_THEMES,calendarSvg,demoCalendar,scenarioCalendar,weeksForCalendar} from '../scripts/calendar.mjs';
+const $=id=>document.getElementById(id),sprites={},svgStrings={},themes=PUBLISHED_THEMES;let snapshot,data;
 for(const control of document.querySelectorAll('input,select,button'))control.disabled=true;
 const year=()=>Math.min(2100,Math.max(2000,Math.floor(Number($('year').value)||2026)));
 const dateIndex=()=>Math.max(0,data.days.findIndex(d=>d.date===$('date').value));

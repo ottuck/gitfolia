@@ -37,7 +37,7 @@ for(let i=0;i<dates.length;i++){
 const weeks=[];for(const date of dates){if(!weeks.length||new Date(date+'T00:00:00Z').getUTCDay()===0)weeks.push([]);weeks.at(-1).push(date);}
 const means=weeks.map(week=>{const past=week.filter(date=>date<=snapshot.asOf);return past.length?past.reduce((n,date)=>n+api.get(date).contributionCount,0)/past.length:null;});
 const maximum=Math.max(0,...means.filter(x=>x!==null));
-const themes=['watercolor','herbarium','midnight'],images=[];
+const themes=['watercolor'],images=[];
 for(const theme of themes){
  const file=`calendar-${theme}.svg`,svg=fs.readFileSync(path.join(root,'images',file),'utf8');
  const sprites=JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json')));

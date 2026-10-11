@@ -1,14 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
-import {calendarSvg,demoCalendar,THEMES} from './calendar.mjs';
+import {calendarSvg,demoCalendar,THEMES,PUBLISHED_THEMES} from './calendar.mjs';
 import {fetchCalendar} from './fetch-calendar.mjs';
 const root=path.resolve(import.meta.dirname,'..'),out=path.join(root,'images'),[login='ottuck',yearArg='2026',mode='github']=process.argv.slice(2),year=Number(yearArg);
 if(!['github','demo'].includes(mode))throw new Error('Data source must be github or demo');
 fs.mkdirSync(out,{recursive:true});
 const data=mode==='github'?await fetchCalendar(login,year):demoCalendar(year),results=[];
 fs.writeFileSync(path.join(out,'calendar-data.json'),JSON.stringify(data,null,2)+'\n');
-for(const [theme,palette]of Object.entries(THEMES)){
+for(const theme of PUBLISHED_THEMES){
+ const palette=THEMES[theme];
  const sprites=JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json'))),svg=calendarSvg(data,{theme,sprites}),sha=createHash('sha256').update(svg).digest('hex'),filename=`calendar-${theme}.svg`;
  fs.writeFileSync(path.join(out,filename),svg);results.push({theme,name:palette.name,filename,sha256:sha,bytes:Buffer.byteLength(svg),dailyLeaves:data.days.length,weeklyLeaves:(svg.match(/data-kind="week"/g)||[]).length});
 }
@@ -26,17 +27,17 @@ ${data.source==='github'?`[GitHub 기여 달력에서 확인](https://github.com
 
 <p align="center"><img src="images/${version(display)}" width="480" alt="${display.name} ${year} daily contribution calendar" /></p>
 
-동판화·미드나이트 스타일과 검증 데이터는 로컬 미리보기에서 비교할 수 있습니다. 이 전시는 자동 갱신 후에도 한 장으로 유지됩니다.
+그림 하단의 **Grown from ${total.toLocaleString('en-US')} contributions.**는 올해의 기여 합계입니다. 그 아래에는 활동한 날짜 수와 GitHub 계정을 적었습니다. 잎의 색과 숫자가 같은 기록에서 함께 갱신됩니다.
 
 ## 날짜와 색
 
 - 연도 전체를 고정합니다. 평년에는 일별 잎 365개, 윤년에는 366개이며 날짜가 바뀌어도 이전 잎의 위치는 같습니다.
 - 일별 잎은 GitHub GraphQL의 contributionLevel(0–4)을 그대로 사용합니다. 커밋뿐 아니라 GitHub가 인정하는 다른 기여도 포함됩니다.
-- 같은 단계에 속하는 날은 기여 수가 달라도 같은 농도로 표시합니다. 채색 잎은 불투명도 38%, 59%, 80%, 100%와 명도 조정을 함께 사용합니다. 활동 없는 날의 선화를 낮춰, 1단계 활동도 빈 날보다 확실히 드러납니다. 밝은 종이에서는 단계가 높을수록 진해지고, 미드나이트에서는 더 밝은 안료로 대비를 높입니다.
+- 같은 단계에 속하는 날은 기여 수가 달라도 같은 농도로 표시합니다. 채색 잎은 불투명도 38%, 59%, 80%, 100%와 명도 조정을 함께 사용합니다. 활동 없는 날의 선화를 낮춰, 1단계 활동도 빈 날보다 확실히 드러납니다. 단계가 높을수록 채색이 진해집니다.
 - 네 큰 줄기를 따라 주별 작은 가지를 배치합니다. 작은 가지의 일별 잎은 날짜순입니다. 큰 요약 잎은 일요일부터 토요일까지의 주 평균입니다.
 - 주 평균은 이미 지난 날짜의 기여 수를 더하고 날짜 수로 나눕니다. 0인 날도 포함하며 미래 날짜는 제외합니다. 연초·연말의 일부 주는 그 연도에 속하는 날만 사용합니다. 요약 색은 최대 주 평균에 대한 네 단계이며 GitHub의 일별 색 공식과 다릅니다.
 - 활동 없는 날은 선화, 미래 날짜는 더 옅은 선화입니다. 줄기와 뿌리는 항상 채색되어 있습니다. 모든 잎이 채워지는 목표 수치는 없습니다.
-- 세 테마는 같은 날짜 배치를 공유합니다. 원화 후보의 잎을 그대로 세는 방식 대신, 각 화풍으로 만든 8개 잎 변형을 정확한 날짜 수에 맞춰 조합합니다.
+- 수채화 원화로 만든 8개 잎 변형을 정확한 날짜 수에 맞춰 조합합니다.
 - SVG는 내장 PNG 잎과 도형만 사용합니다. JavaScript와 외부 리소스 요청이 없습니다. URL 해시로 README 이미지 캐시를 갱신합니다.
 
 ## 실행과 미리보기
@@ -51,7 +52,7 @@ npm run verify:actual
 python -m http.server 8767 --bind 127.0.0.1
 \`\`\`
 
-[로컬 미리보기](http://127.0.0.1:8767/calendar-preview/)에서 세 테마 비교, 날짜별 확인, 윤년 예시, 주 요약 표시, SVG 저장이 가능합니다. 브라우저는 저장된 실제 기록을 읽으며 토큰을 사용하지 않습니다.
+[로컬 미리보기](http://127.0.0.1:8767/calendar-preview/)에서 날짜별 확인, 윤년 예시, 주 요약 표시, SVG 저장이 가능합니다. 브라우저는 저장된 실제 기록을 읽으며 토큰을 사용하지 않습니다.
 
 기록 선택에서 **검증: 연초부터 연말까지**, **검증: 연말 40~95기여**, **검증: 매일 30~90기여**를 고르면 12월 31일까지의 고정 테스트 데이터로 확인할 수 있습니다. 연말 집중 예시는 12월 25일만 활동 없는 날로 남깁니다. 테스트 데이터는 실제 GitHub 기여 기록에 섞이지 않습니다.
 

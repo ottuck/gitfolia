@@ -4,33 +4,15 @@
   "login": "ottuck",
   "year": 2026,
   "asOf": "2026-10-11",
-  "totalContributions": 1325,
+  "totalContributions": 1326,
   "activeDays": 74,
   "images": [
     {
       "theme": "watercolor",
       "name": "수채화 양치식물",
       "filename": "calendar-watercolor.svg",
-      "sha256": "9f3a7323e3f990bbdb0f79a1a7413114137033ffc821dab14aad07c69a3f6361",
-      "bytes": 423425,
-      "dailyLeaves": 365,
-      "weeklyLeaves": 53
-    },
-    {
-      "theme": "herbarium",
-      "name": "동판화 허바리움",
-      "filename": "calendar-herbarium.svg",
-      "sha256": "4eb847383e92edc4b038cf82fb4d0c31c121678b86fc5ee10cce576a2a329ca4",
-      "bytes": 429390,
-      "dailyLeaves": 365,
-      "weeklyLeaves": 53
-    },
-    {
-      "theme": "midnight",
-      "name": "미드나이트 식물 도감",
-      "filename": "calendar-midnight.svg",
-      "sha256": "f5711601aaf39313cdf6836ac054022d9264e107af2cc058678e858f7448224d",
-      "bytes": 424860,
+      "sha256": "72d799b845a555117762d22a8d61802e4b6fa55d4664cd2b10c0f8a1d6c1338f",
+      "bytes": 423701,
       "dailyLeaves": 365,
       "weeklyLeaves": 53
     }

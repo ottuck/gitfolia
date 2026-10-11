@@ -1,7 +1,8 @@
 import fs from 'node:fs';
 import path from 'node:path';
+import {PUBLISHED_THEMES} from './calendar.mjs';
 const root=path.resolve(import.meta.dirname,'..'),out=path.resolve(process.argv[2]||path.join(root,'images/calendar-preview.html'));
-const themes=['watercolor','herbarium','midnight'],values=[JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json'))),...themes.map(theme=>JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json'))))];
+const themes=PUBLISHED_THEMES,values=[JSON.parse(fs.readFileSync(path.join(root,'images/calendar-data.json'))),...themes.map(theme=>JSON.parse(fs.readFileSync(path.join(root,'artwork/calendar',theme+'-sprites.json'))))];
 const engine=fs.readFileSync(path.join(root,'scripts/calendar.mjs'),'utf8').replace(/^export /gm,'');
 const app=fs.readFileSync(path.join(root,'calendar-preview/app.js'),'utf8').split('\n').filter(line=>!line.startsWith('import ')).map(line=>line.trimStart().startsWith('const values=await Promise.all(')?' const values='+JSON.stringify(values)+';':line).join('\n');
 let html=fs.readFileSync(path.join(root,'calendar-preview/index.html'),'utf8');
